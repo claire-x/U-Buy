@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\models",
+    "\\plugin",
+    "\\public",
+    "\\public\\css_main",
+    "\\public\\fontawesome-5.5",
+    "\\public\\magnific-popup",
+    "\\routes",
+    "\\sql",
+    "\\views"
+  ],
+  "SelectedNode": "\\routes\\logout.js",
+  "PreviewInSolutionExplorer": false
+}

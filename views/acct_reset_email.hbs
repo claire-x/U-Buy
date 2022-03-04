@@ -1,0 +1,106 @@
+<!--
+    Templates are used. They're downloaded from 
+    "https://templatemo.com/tm-521-get-ready" and 
+    "https://templatemo.com/tm-525-the-town"  
+-->
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+
+     <title>login page</title>
+
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+     <meta name="description" content="">
+     <meta name="keywords" content="">
+     <meta name="team" content="">
+     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+     <link rel="stylesheet" href="http://localhost:8081/css/bootstrap.min.css">
+     <link rel="stylesheet" href="http://localhost:8081/css/vegas.min.css">
+     <link rel="stylesheet" href="http://localhost:8081/css/font-awesome.min.css">
+
+     <!-- MAIN CSS -->
+     <link rel="stylesheet" href="http://localhost:8081/css/templatemo-style.css">
+
+ </head>
+ <body>
+     <!-- HOME -->
+     <section id="home"  style="background-color: dodgerblue;">
+        <div class="overlay"></div>
+          <div class="container">
+               <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                         <div class="home-info">
+                             <h1>Welcome to U Buy! <br>Reset your password here!</h1>
+                              <h1></h1>
+                              <div class="subscribe-form">
+                                  <form method="POST" action="http://localhost:8081/login/reset">
+                                      {{#if this.info}}
+                                      <div class="my-notify-info">{{this.info}}</div>
+                                      {{else if this.message}}
+                                      <div class="my-notify-success">{{this.message}}</div>
+                                      {{else if this.warning}}
+                                      <div class="my-notify-warning">{{this.warning}}</div>
+                                      {{else if this.error }}
+                                      <div class="my-notify-error">{{error}}</div>
+                                      {{/if}}
+                                      {{#if this.notice}}
+                                      <div class="my-notify-success">{{this.notice}}</div>
+                                      {{/if}}<hr><br>
+                                      <label for="isd" style="color:white;"><b>SID</b></label>
+                                      <input type="number" name="sid" class="form-control" placeholder="Enter your student ID" required="" id="sid" maxlength="10" minlength="10">
+                                      <br>
+                                      <p style="color:white;"><b>Verification Code</b></p>
+                                      <div class="col-xs-6">
+                                          <input type='text' name="code" class="form-control-my" placeholder="   code" required="" id="code" maxlength="6">
+                                      </div>
+                                      <div class="col-xs-1">
+                                      </div>
+                                      <div class="col-xs-5">
+                                          <input type="button" name="sendcode" class="form-control-my" id="sendcode" value="Send" onclick="getSID()" style="background-color:lightgray;">
+                                      </div> <br> <br> <br>
+
+                                      <input type="submit" value="confirm" class="form-control" id="bt" style="background-color:lightsteelblue;" />
+</div> <br>
+                                </form>
+                                {{#if this.message}}
+                               <p style="color:white">Go back to <a href="/signup">sign-up</a> to active your account</p>
+                              {{/if}}
+                              <p style="color:white">click <a href="/login">here</a> go back to login</p>  
+                              </div>    
+                         </div>
+                    </div>
+               </div>
+          </div>
+     </section>
+
+     <!-- SCRIPTS -->
+     <script src="http://localhost:8081/js/jquery.js"></script>
+     <script src="http://localhost:8081/js/bootstrap.min.js"></script>
+     <script src="http://localhost:8081/js/vegas.min.js"></script>
+     <script src="http://localhost:8081/js/countdown.js"></script>
+     <script src="http://localhost:8081/js/init.js"></script>
+     <script src="http://localhost:8081/js/custom.js"></script>
+     <script src="http://localhost:8081/js/ajax.js"></script>
+     <script src="http://localhost:8081/js/reset.js"></script>
+     <script>
+      let sid = $('#sid').val();
+      let code = $('#sid').val();
+      function send(){
+          let info = {
+            sid : sid,
+            code : code
+          }
+          $.post("/login/reset", info, function(res){
+            alert("CAPTCHA code is sent to you via email");
+          })
+          alert('Hi')
+          $("#sid").attr("value", sid);
+          $('#code').attr("value",code);
+      }
+
+
+    </script>
+ </body>
+</html>
