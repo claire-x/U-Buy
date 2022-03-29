@@ -1,0 +1,192 @@
+<!--
+    Templates are used. They're downloaded from 
+    "https://templatemo.com/tm-521-get-ready"-->
+	
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+     <title>chat-room entry</title>
+<!-- 
+
+Get Ready Template
+
+https://templatemo.com/tm-521-get-ready
+
+-->
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+     <meta name="description" content="">
+     <meta name="keywords" content="">
+     <meta name="team" content="">
+     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+     <link rel="stylesheet" href="css_chat/bootstrap.min.css">
+     <link rel="stylesheet" href="css_chat/vegas.min.css">
+     <link rel="stylesheet" href="css_chat/font-awesome.min.css">
+
+     <!-- MAIN CSS -->
+     <link rel="stylesheet" href="css_chat/templatemo-style.css">
+     <style type="text/css">
+       #ul>li{cursor: pointer;transition: .3s}
+       #ul>li:hover{color: red;}
+     </style>
+</head>
+<body>
+     <!-- HOME -->
+     <section id="home">
+     <div class="overlay"></div>
+          <div class="container">
+               <div class="row">
+
+                    <div class="col-md-12 col-sm-12" style="text-align:center">
+                         <div class="home-info" style="text-align:center">
+                              <!--<div class="text-center tm-hero-text-container" style = "text-align:center; font-size:20px"></div> -->
+						<h1 class="tm-hero-title", id = 'userid'></h1>
+                              <h3 style="color:white">Please enter the one's sid No. you want to talk to</h3>
+                              <h3 style="color:white" id = 'user id'>Please enter the one's sid No. you want to talk to</h3>
+                              <div class="subscribe-form" style="text-align:center" >
+
+                                   
+                                   <input id="input_roomName"  class="form-control" style="text-align:center"  size="20" maxlength="6" placeholder="Please enter the sid No."><br>
+                                   <input id="input_roomName2" class="form-control" style="text-align:center"  size="20" maxlength="6" placeholder="Please re-enter the sid No." ><br>
+                                   <input type="button" class="form-control" value="Submit" size = "8" onclick="enterRoom()" target = "_blank" method="get"/>          
+                                   <br>
+                                   <a class="nav-link tm-nav-link" style="color:white" onclick=" window.location='' " href="###">Back to Home Page</a>
+                              </div>
+                         </div>
+                         
+                              <!--   
+						<input id="input_roomName" size="20" maxlength="6" placeholder = "   enter your room No." style="border-radius:10px; width: 200px;height: 35px;"><br>
+						<input id="input_roomName2" size="20" maxlength="6" placeholder="   enter again"  style="border-radius:10px; width: 200px;height: 35px;" ><br>
+                              <input type="button"  value="✔" size = "8" onclick="enterRoom()" target = "_blank" method="get"/>          
+                              <br>
+                              <a class="nav-link tm-nav-link" style="color:white" onclick=" window.location='' " href="###">Home Page</a>
+                              -->	
+								
+								
+                    </div>
+                    <div class = 'chatroom', id = 'exist_id'>
+                         <input type="button" id = 'friend_list' class="form-control" value="friendlist" size = "8" target = "_blank" method="get"/> 
+                         <ul id='ul'></ul>
+
+                         
+                    </div>
+               </div>
+          </div>
+     </div>
+     </section>
+
+     <!-- SCRIPTS -->
+     <script src="js/jquery.js"></script>
+     <script src="js/bootstrap.min.js"></script>
+     <script src="js/vegas.min.js"></script>
+     <script src="js/countdown.js"></script>
+     <script src="js/init.js"></script>
+     <script src="js/custom.js"></script>
+	 <script type="text/javascript">
+     function myTrim(x) {
+          return x.replace(/^\s+|\s+$/gm,'');
+     }
+     function getCookie(cookieName){
+          var cookieObj={},cookieSplit=[],cookieArr=document.cookie.split(";");
+          for(var i=0,len=cookieArr.length;i<len;i++)
+               if(cookieArr[i]) {
+            // 以等号（=）分组
+            cookieSplit=cookieArr[i].split("=");
+            // Trim() 是自定义的函数，用来删除字符串两边的空格
+            cookieObj[myTrim(cookieSplit[0])]=myTrim(cookieSplit[1]);
+        }
+      
+    return cookieObj[cookieName];
+}
+
+     var box = document.getElementById('userid');
+     box.innerText=getCookie('userID');
+
+
+     friend_list.onclick = function seechat() {
+          ajax({
+               'url':'http://localhost:8081/show',
+               'type':'get',
+               'data':{userID:box.innerText},
+               success:function(data){
+                    console.log(data);
+                    for(var i = 0; i< data.length;i++){
+                    var li = document.createElement('li');
+                    li.innerHTML='<a href="javascript:;" class="changePage">'+i+'</a>';
+                    ol.appendChild(li);
+               }
+               }
+          })
+          
+     }
+
+
+	function enterRoom() {
+          var k = getCookie('userID');
+        var roomNo = document.getElementById("input_roomName").value;
+        var roomNo2 = document.getElementById("input_roomName2").value;
+		
+		if(roomNo != null &&  roomNo2 != null){
+               window.location.href = "./chat1?cid="+k+"&sid="+roomNo2;
+               //window.location.href = "room/" + roomNo;
+		}
+		if (roomNo == "" || roomNo == null || roomNo2 == "" || roomNo2 == null) {
+            alert("please enter the room number");
+            return;
+        }
+		if(roomNo == null || roomNo2 == null){
+			alert("check the number you enter~")<br>("they do not match");
+		}
+		
+        
+    }
+
+
+
+
+//ajax request
+    function ajax(json){
+     if(window.XMLHttpRequest){
+          var ajax = new XMLHttpRequest();
+     }
+     else{
+          var ajax = new ActiveXObject( "Microsoft.XMLHTTP" );
+     }
+
+     if(json.type=='get'){
+          ajax.open('get',json.url+'?'+JsonToString(json.data),true);
+          ajax.send();
+     }
+     else if(json.type=='post'){
+          ajax.open('post',json.url,true);
+          ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+          ajax.send(JsonToString(json.data));
+     }
+     
+
+     ajax.onreadystatechange = function(){
+          if(ajax.readyState == 4){
+               if(ajax.status>=200 && ajax.status<300 || ajax.status == 304){
+                    json.success(ajax.responseText);
+
+               }
+               else{
+                    json.error && json.error();
+               }
+          };
+     };
+     function JsonToString(json){
+          var arr = [];
+          for(var i in json){
+               arr.push(i+'='+json[i]);
+          };
+          return arr.join('&');
+     }
+}
+</script>
+
+</body>
+
+</html>

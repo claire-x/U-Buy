@@ -4,7 +4,6 @@ var app = express();
 var bodyParser = require('body-parser');
 var engines = require('consolidate');
 var path = require('path');
-
 app.engine('html', engines.swig);
 app.set('view engine', 'html');
 // create application/x-www-form-urlencoded coding analyze
@@ -47,6 +46,9 @@ var check_seller = require('./routes/check_seller');
 var result_buyer = require('./routes/result_buyer');
 var result_seller = require('./routes/result_seller');
 var process_evaluate = require('./routes/process_evaluate');
+var chat = require('./routes/chat');
+var show = require('./routes/show');
+
 
 app.use("/", index);
 app.use("/login", login);
@@ -61,6 +63,8 @@ app.use('/check_seller', check_seller);
 app.use('/result_buyer', result_buyer);
 app.use('/result_seller', result_seller);
 app.use('/process_evaluate', process_evaluate);
+app.use('/chat', chat);
+app.use('/show',show);
 
 /**
 * ----------------------------------------------
@@ -88,13 +92,10 @@ app.get('/Seller', urlencodedParser, function (req, res) {
   });
 });
 
-app.post('/entry', urlencodedParser, function (req, res) {
-  if( !req.session.passport ){ res.redirect('/login'); }
-  res.redirect('entry.html');
-});
 
 
-app.post('/evaluate',urlencodedParser, function (req, res) {
+
+app.post('/evaluate', function (req, res) {
   if( !req.session.passport ){ res.redirect('/login'); }
   res.redirect('evaluate.html');
 });
@@ -108,37 +109,187 @@ app.use('/post',post);
 /**
 * ----------------------------------------------
 */
+//zhangchi and yangliu's job
+/*
+app.use('/chat', urlencodedParser, function (req, res) {
+  //console.debug(req.body)
+  let userID = req.cookies.islogin.sid; 
+  console.log('redirect ot chat function'+ userID);
+  res.cookie('userID',userID,{maxAge:1000*3600});
 
-// interact with front-side
-var io = require('socket.io')(server);
-//count the number of online users
-let counter = 0;
-io.on('connection', (socket) => {
-  counter++;
-  io.emit("online", counter);
-  socket.on("greet", () => {
-      socket.emit("greet", counter);
+  fs.readFile('./所有的文章.txt','utf8',function(err,data){
+    if(err){
+      console.log('err:'+err);
+    }
+    else{
+
+      function toString(data,need){
+        if(data.indexOf(need)!=-1){
+          data = data.replace(need,'"');
+          return toString(data,need);
+        }
+        else{
+          return data;
+        }
+      };
+      var l = toString(data,'‘');
+      var r = toString(l,'’');
+      //var lastArr = JSON.parse(r);
+
+      res.write(r);
+      res.end();
+      //var d = data.replace('‘','"');
+      //var c = d.replace('’','"');
+      //console.log(JSON.parse(c));
+      //console.log(JSON.parse(data));
+      //console.log(eval('('+data+')'));
+    }
   });
-  socket.on("send", (msg) => {
-	  //umpty input is not allowed
-      if (Object.keys(msg).length < 2) return;
-      io.emit("msg", msg);
-  });
-  socket.on('disconnect', () => {
-      counter = (counter < 0) ? 0 : counter-=1;
-      io.emit("online", counter);
-  });
+
+
+  if( !req.session.passport ){ res.redirect('/login'); }
+  res.sendFile(__dirname+'/chat.html');
 });
+*/
+let http = require('http').Server(app);
+let io = require('socket.io')(http);
+
+app.get('/chat1',urlencodedParser, function (req, res) {
+    console.log('the requesit is')
+    console.log(req.query.cid);
+    fs.readFile('./all_dialogues.txt','utf8',function(err,data){
+    if(err){
+      console.log('err:'+err);
+    }
+    else{
+
+      function toString(data,need){
+        if(data.indexOf(need)!=-1){
+          data = data.replace(need,'"');
+          return toString(data,need);
+        }
+        else{
+          return data;
+        }
+      };
+      var l = toString(data,'‘');
+      var r = toString(l,'’');
+      //var lastArr = JSON.parse(r);
+
+      res.write(r);
+      res.end();
+      //var d = data.replace('‘','"');
+      //var c = d.replace('’','"');
+      //console.log(JSON.parse(c));
+      //console.log(JSON.parse(data));
+      //console.log(eval('('+data+')'));
+    }
+  });
+    res.sendFile(__dirname+'/client.html'); 
+})
+app.get('/chat2', function (req, res) {
+    res.sendFile(__dirname+'/service.html');
+})
+
+// socket连接对象，键名：cid****_sid***、sid****_cid****（前面为发送方，后面为接收方）
+let localSockets = {}
+
+class Chat {
+    constructor(socket, chatInfo) {
+        this.socket = socket
+        this.chatInfo = chatInfo
+    }
+
+    isCustomerSender() {
+        if (this.chatInfo.customer && this.chatInfo.customer.isSender === true) {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    getSocketKeyValue() {
+        // 客户是发送消息方，客服是接收消息方
+        if (this.isCustomerSender()) {
+            return {
+                key: `cid${this.chatInfo.customer.id}_sid${this.chatInfo.service.id}`,
+                val: this.socket
+            }
+        } else {
+            return {
+                key: `sid${this.chatInfo.service.id}_cid${this.chatInfo.customer.id}`,
+                val: this.socket
+            }
+        }
+    }
+}
+
+class Message {
+    constructor(req){
+        this.req = req
+        this.userInfo = this.req.userInfo || {}
+        this.msg = this.req.msg || ''
+    }
+    getSenderKey(){
+        if(this.userInfo.customer.isSender){
+            return `cid${this.userInfo.customer.id}`
+        } else {
+            return `sid${this.userInfo.service.id}`
+        }
+    }
+    getReceiverKey(){
+        if(this.userInfo.customer.isSender){
+            return `sid${this.userInfo.service.id}`
+        } else {
+            return `cid${this.userInfo.customer.id}`
+        }
+    }
+    send(){
+        if(localSockets[`${this.getSenderKey()}_${this.getReceiverKey()}`]){
+            localSockets[`${this.getSenderKey()}_${this.getReceiverKey()}`].emit('callback private message', {
+                msg: this.msg,
+                self: true
+            })
+        }
+        if(localSockets[`${this.getReceiverKey()}_${this.getSenderKey()}`]){
+            localSockets[`${this.getReceiverKey()}_${this.getSenderKey()}`].emit('callback private message', {
+                msg: this.msg,
+                self: false
+            })
+        }
+    }
+}
+
+io.on('connect', function (socket) {
+    socket.on('new chat', function (chatInfo) {
+        let newChatObj = new Chat(socket, chatInfo)
+        let newSocket = newChatObj.getSocketKeyValue()
+
+        // 若重复登录，断开原连接
+        if(newSocket.key in localSockets){
+            localSockets[newSocket.key].disconnect(true)
+        }
+
+        // 设置新连接
+        localSockets[newSocket.key] = newSocket.val
+    })
+    socket.on('send private message', function(req){
+        let msgObj = new Message(req)
+        console.log('send private message', req);
+        msgObj.send()
+    })
+})
+
 /**
 * ----------------------------------------------
-*/
 
-app.use(function(request, response) {
-  console.debug('-------------------------The request is:-----------------------')
-  console.debug('head', request.headers)
-  console.debug('body', request.body)
-  console.log('----------------------------------------------------------------')
-  response.status(404).render("404.ejs");
+
+
+var server = app.listen(8081, function () {
+  var host = server.address().address;
+  var port = server.address().port;
+  console.log("Address is http://%s:%s", host, port);
+  console.log("server address: ", server.address())
 });
 var server = app.listen(8081, function () {
   var host = server.address().address;
@@ -146,5 +297,14 @@ var server = app.listen(8081, function () {
   console.log("Address is http://%s:%s", host, port);
   console.log("server address: ", server.address())
 });
+*/
 
 
+app.use(function(request, response) {
+  //console.debug('-------------------------The request is:-----------------------')
+  //console.debug('head', request.headers)
+  //console.debug('body', request.body)
+  //console.log('----------------------------------------------------------------')
+  response.status(404).render("404.ejs");
+});
+http.listen(8081, () => console.log('begin to test the app'))

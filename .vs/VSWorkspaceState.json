@@ -1,8 +1,6 @@
 {
   "ExpandedNodes": [
     "",
-    "\\models",
-    "\\plugin",
     "\\public",
     "\\public\\css_main",
     "\\public\\fontawesome-5.5",
@@ -11,6 +9,6 @@
     "\\sql",
     "\\views"
   ],
-  "SelectedNode": "\\routes\\logout.js",
+  "SelectedNode": "\\plugin",
   "PreviewInSolutionExplorer": false
 }

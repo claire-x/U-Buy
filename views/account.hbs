@@ -31,6 +31,9 @@
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
                       <ul class="navbar-nav ml-auto">
                           <li class="nav-item">
+                              <a class="nav-link tm-nav-link" onclick="window.location='Chat'" href="###">Chat</a>
+                          </li>
+                          <li class="nav-item">
                               <a class="nav-link tm-nav-link" onclick="window.location='Buyer'" href="###">Buyer</a>
                           </li>
                           <li class="nav-item">
@@ -80,9 +83,9 @@
             <p class="mb-4 tm-intro-text" >{{this.sid}}</p>
             <p style="font-size:24px; color:#3496d8">Email:</p>
             <p class="mb-4 tm-intro-text" >{{this.email}}</p>
-            <form action="http://localhost:8081/entry" method="Post">
+            <form action="http://localhost:8081/chat" method="Post">
               <p style="font-size:24px; color:#3496d8">Chat:</p>
-                <input type="submit" class="tm-btn-primary" style="border-color: white" value="    Chat    "></input>
+              <input type="submit" class="tm-btn-primary" style="border-color: white" value="    Chat    "></input>
             </form>
             <br><br><br>
           </div>
