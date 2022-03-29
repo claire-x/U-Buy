@@ -1,0 +1,299 @@
+<!--
+    Templates are used. They're downloaded from 
+    "https://templatemo.com/tm-521-get-ready"-->
+	
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+    
+         <title>chat-room entry</title>
+    <!-- 
+    
+    Get Ready Template
+    
+    https://templatemo.com/tm-521-get-ready
+    
+    -->
+         <meta charset="UTF-8">
+         <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+         <meta name="description" content="">
+         <meta name="keywords" content="">
+         <meta name="team" content="">
+         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+         <link rel="stylesheet" href="css_chat/bootstrap.min.css">
+         <link rel="stylesheet" href="css_chat/vegas.min.css">
+         <link rel="stylesheet" href="css_chat/font-awesome.min.css">
+         <link rel="stylesheet" href="style.css">
+    
+         <!-- MAIN CSS -->
+         <link rel="stylesheet" href="css_chat/templatemo-style.css">
+         <style type="text/css">
+           #ul>li{cursor: pointer;transition: .3s}
+           #ul>li:hover{color: red;}
+         </style>
+    </head>
+    <body>
+         <div class="overlay"> 
+               
+                                  <h1 id = 'userid'></h1>
+                                  <div class="inputBox">
+                                   <form>
+                                        <div class="form-control">
+                                            <input type="text" name="" required="" id="input_roomName">
+                                            <label>Please enter his/her sid No.</label>
+                                        </div>
+                                        <div class="form-control">
+                                            <input type="text" name="" required="" id="input_roomName2">
+                                            <label>Please re-enter the sid No.</label>
+                                        </div>
+                                        <input type="button" class="form-control" value="Submit" size = "8" onclick="enterRoom()" target = "_blank" method="get"/>
+                                        
+                                    </form>     
+                                     
+                              </div>
+                                        
+                                        
+                                   
+                                  <!--   
+                                  <input id="input_roomName" size="20" maxlength="6" placeholder = "   enter your room No." style="border-radius:10px; width: 200px;height: 35px;"><br>
+                                  <input id="input_roomName2" size="20" maxlength="6" placeholder="   enter again"  style="border-radius:10px; width: 200px;height: 35px;" ><br>
+                                  <input type="button"  value="✔" size = "8" onclick="enterRoom()" target = "_blank" method="get"/>          
+                                  <br>
+                                  <a class="nav-link tm-nav-link" style="color:white" onclick=" window.location='' " href="###">Home Page</a>
+                                  -->	
+                                            
+                                            
+                                  <div class = 'chatroom', id = 'exist_id'>
+                                   <input type="button" id = 'friend_list' class="form-control" value="friendlist" size = "8" target = "_blank" method="get"/> 
+                                   <ul id='ul'></ul>
+                                   <ol id='ol'></ol>
+          
+                                   
+                              </div>
+                         
+    
+                             
+                    
+         </section>
+    
+         <!-- SCRIPTS -->
+         <script src="js/jquery.js"></script>
+         <script src="js/bootstrap.min.js"></script>
+         <script src="js/vegas.min.js"></script>
+         <script src="js/countdown.js"></script>
+         <script src="js/init.js"></script>
+         <script src="js/custom.js"></script>
+          <script type="text/javascript">
+         function myTrim(x) {
+              return x.replace(/^\s+|\s+$/gm,'');
+         }
+         function getCookie(cookieName){
+              var cookieObj={},cookieSplit=[],cookieArr=document.cookie.split(";");
+              for(var i=0,len=cookieArr.length;i<len;i++)
+                   if(cookieArr[i]) {
+                // 以等号（=）分组
+                cookieSplit=cookieArr[i].split("=");
+                // Trim() 是自定义的函数，用来删除字符串两边的空格
+                cookieObj[myTrim(cookieSplit[0])]=myTrim(cookieSplit[1]);
+            }
+          
+        return cookieObj[cookieName];
+    }
+    
+         var box = document.getElementById('userid');
+         box.innerText=getCookie('userID');
+    
+    
+         friend_list.onclick = function seechat() {
+              var allLi = ol.children.length;
+              if (allLi != 0) {
+                   return;
+              }
+    
+    
+              ajax({
+                   'url':'http://localhost:8081/show',
+                   'type':'get',
+                   'data':{'instruction':"show"},
+                   success:function(data){
+                        console.log('get data'+data);
+                        data = JSON.parse(data);
+                        data_cid = data['cid'];
+                        for(var i = 0; i< data_cid.length;i++){
+                        var li = document.createElement('li');
+                        li.innerHTML='<a href="javascript:;" class="changePage" id ="cid_dialogue" onclick = "enterchat2()">'+data_cid[i]+'</a>' +'<input type="button" onclick="delete_cid()" id = "delete_cid" class="form-control" value="delete dialogue" size = "8" target = "_blank" method="get"/>';
+                        li.id = "chat_record";
+                        ol.appendChild(li);
+                   }
+                        data_sid = data['sid'];
+                        for(var i = 0; i< data_sid.length;i++){
+                        var li = document.createElement('li');
+                        li.innerHTML='<a href="javascript:;" class="changePage" id ="sid_dialogue" onclick = "enterchat1()">'+data_sid[i]+'</a>' + '<input type="button" onclick="delete_sid()" id = "delete_sid" class="form-control" value="delete dialogue" size = "8" target = "_blank" method="get"/>' ;
+                        li.id = "chat_record";
+                        ol.appendChild(li);
+                   }
+                   }
+              });
+              
+         };
+    
+    
+    
+    
+         function delete_cid(e) {
+              //console.log('has click');
+              var ev = e || event;
+              var iTarget = ev.srcElement || ev.target;
+              var p1 = iTarget.parentElement;
+              var cid = p1.children[0].innerHTML;
+              ajax({
+                   'url':'http://localhost:8081/show/delete',
+                   'type':'get',
+                   'data':{'instruction':"delete",'id':cid,'type':'cid'},
+                   success:function(data){
+                        var p3 = p1.parentElement;
+                        p3.removeChild(p1);
+                        console.log(data);
+                        
+                   }
+              });
+    
+    
+    
+    
+    
+    
+    
+              
+    };
+         function delete_sid(e) {
+              //console.log('has click');
+              var ev = e || event;
+              var iTarget = ev.srcElement || ev.target;
+              var p1 = iTarget.parentElement;
+              var sid = p1.children[0].innerHTML;
+              ajax({
+                   'url':'http://localhost:8081/show/delete',
+                   'type':'get',
+                   'data':{'instruction':"delete",'id':sid,'type':'sid'},
+                   success:function(data){
+                        var p3 = p1.parentElement;
+                        p3.removeChild(p1);
+                        console.log(data);
+                        
+                   }
+              });
+    
+    
+    
+    
+    
+    
+    
+              
+    };
+    
+    function enterchat2(e) {
+         var ev = e || event;
+         var iTarget = ev.srcElement || ev.target;
+         let k = getCookie('userID');
+         cid_id = iTarget.innerText;
+         window.location.href = "./chat2?sid="+k+"&cid="+cid_id;
+    
+    } 
+    
+    function enterchat1(e) {
+         var ev = e || event;
+         var iTarget = ev.srcElement || ev.target;
+         let k = getCookie('userID');
+         sid_id = iTarget.innerText;
+    
+         window.location.href = "./chat1?cid="+k+"&sid="+sid_id;
+    
+    }
+    
+    
+    
+     function enterRoom() {
+            let k = getCookie('userID');
+            var roomNo = document.getElementById("input_roomName").value;
+            var roomNo2 = document.getElementById("input_roomName2").value;
+    
+              
+              if(roomNo != null &&  roomNo2 != null && roomNo2 == roomNo){
+                   ajax({
+                   'url':'http://localhost:8081/show/create',
+                   'type':'get',
+                   'data':{'instruction':"create",'id':roomNo2},
+                    success:function(data){
+                    
+                        if (data == "successfully added a new friend!!!!!!!"){
+                        window.location.href = "./chat1?cid="+k+"&sid="+roomNo2;
+                   }
+                        else {
+                             alert(data);
+                        }
+                        console.log(data);
+                        
+                   }}
+              ); 
+              };
+              if (roomNo == "" || roomNo == null || roomNo2 == "" || roomNo2 == null) {
+                alert("please enter the room number");
+                return;
+            }
+              if(roomNo != roomNo2){
+                   alert("check the number you enter~")<br>("they do not match");
+              }
+              
+            
+        };
+    
+    
+    
+    
+    //ajax request
+        function ajax(json){
+         if(window.XMLHttpRequest){
+              var ajax = new XMLHttpRequest();
+         }
+         else{
+              var ajax = new ActiveXObject( "Microsoft.XMLHTTP" );
+         }
+    
+         if(json.type=='get'){
+              ajax.open('get',json.url+'?'+JsonToString(json.data),true);
+              ajax.send();
+         }
+         else if(json.type=='post'){
+              ajax.open('post',json.url,true);
+              ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+              ajax.send(JsonToString(json.data));
+         }
+         
+    
+         ajax.onreadystatechange = function(){
+              if(ajax.readyState == 4){
+                   if(ajax.status>=200 && ajax.status<300 || ajax.status == 304){
+                        json.success(ajax.responseText);
+    
+                   }
+                   else{
+                        json.error && json.error();
+                   }
+              };
+         };
+         function JsonToString(json){
+              var arr = [];
+              for(var i in json){
+                   arr.push(i+'='+json[i]);
+              };
+              return arr.join('&');
+         }
+    }
+    </script>
+    
+    </body>
+    
+    </html>
