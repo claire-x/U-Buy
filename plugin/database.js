@@ -14,7 +14,7 @@ function create_pool(){
     }));
 }
 
-;var pool = new create_pool()
+var pool = new create_pool()
 
 // Select user data by id
 exports.select_user_data = function(sid, callback){
@@ -32,6 +32,21 @@ exports.select_user_data = function(sid, callback){
     })
 }
 
+exports.select_all_user = function (callback) {
+    let sql = 'SELECT * FROM account'
+    pool.query(sql, function (err, user_list) {
+        if (err) {
+            console.error("Some error(s) raised from select_user_data():")
+            console.error(err)
+            console.error('--------------------')
+        }
+        if (user_list && typeof callback == 'function') {
+            callback(user_list)
+            return user_list
+        }
+    })
+}
+
 // verify user identity
 exports.verify_user_identity = function(sid, password, callback){
     let sql = 'SELECT * FROM account WHERE `sid`="' + sid +
@@ -41,6 +56,19 @@ exports.verify_user_identity = function(sid, password, callback){
         if(user_list && typeof callback == 'function'){
             callback(user_list)
             return user_list[0]
+        }
+    })
+}
+
+// verify admin identity
+exports.verify_admin_identity = function (aid, password, callback) {
+    let sql = 'SELECT * FROM admin_account WHERE `aid`="' + aid +
+        '" AND `password`="' + password + '"'
+    pool.query(sql, function (err, admin_list) {
+        if (err) { print_func_err('verify_admin_identity', err) }
+        if (admin_list && typeof callback == 'function') {
+            callback(admin_list)
+            return admin_list[0]
         }
     })
 }

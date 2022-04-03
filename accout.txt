@@ -1,5 +1,8 @@
-Accounts that are already in the DB
+Accounts that will be in the DB after inserting all records inside .sql files
 
+
+User Accounts:
+-----------------------------------------
 LamLam: 
 sid: 1155124736
 pwd: 123456
@@ -7,3 +10,9 @@ pwd: 123456
 XXX:
 sid: 1155000000
 pwd: 123456
+
+
+Admin Account:
+-----------------------------------------
+aid:123456
+pwd:123456

@@ -2,9 +2,22 @@
 const db = require("../plugin/database"); 
 
 // authentication for any access request
-exports.authenticate = function(req, res, next){
+exports.authenticate = function (req, res, next) {
+    // admin
+    if (req.cookies.admin_islogin) {
+        // the admin has logged in
+        // set session for current session
+        req.session.admin_passport = req.cookies.admin_islogin;
+        let user = { name: req.session.admin_passport.name };
+        res.locals.user = user;      // what's it?
+    }
+    else {
+        req.session.admin_passport = null;
+    }
+
+    // user
     if (req.cookies.islogin) {
-        // the user is logined
+        // the user has logged in
         // set session for current session
         req.session.passport = req.cookies.islogin; 
         let user = {name: req.session.passport.name};
@@ -12,12 +25,15 @@ exports.authenticate = function(req, res, next){
     }
     else{
         req.session.passport = null;
+    }
+
+    if (!req.cookies.islogin && !req.cookies.admin_islogin) {
         res.locals.user = null;
     }
     
-    if (!req.session.passport) {
+    if (!req.session.passport && !req.session.admin_passport) {
         // exempt specific url
-        if( req.url == '/' || req.url == '/signup' || req.url == '/signup/email' ||
+        if (req.url == '/' || req.url == '/admin_login' || req.url == '/signup' || req.url == '/signup/email' ||
             req.url == '/login' || req.url == "/login/reset" || 
             req.url == "/login/reset/email" || req.url == "/login/reset/pwd" ){
             next();
@@ -26,7 +42,7 @@ exports.authenticate = function(req, res, next){
             res.redirect('/login');
         }
     }
-    else if (req.session.passport) {
+    else {
         // if the user is login, pass
         next();
     }

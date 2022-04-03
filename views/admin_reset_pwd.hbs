@@ -1,0 +1,83 @@
+<!--
+    Templates are used. They're downloaded from 
+    "https://templatemo.com/tm-521-get-ready" and 
+    "https://templatemo.com/tm-525-the-town"  
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+     <title>reset user password</title>
+
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+     <meta name="description" content="">
+     <meta name="keywords" content="">
+     <meta name="team" content="">
+     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+     <link rel="stylesheet" href="http://localhost:8081/css/bootstrap.min.css">
+     <link rel="stylesheet" href="http://localhost:8081/css/vegas.min.css">
+     <link rel="stylesheet" href="http://localhost:8081/css/font-awesome.min.css">
+
+     <!-- MAIN CSS -->
+     <link rel="stylesheet" href="http://localhost:8081/css/templatemo-style.css">
+
+</head>
+<body>
+     <!-- HOME -->
+     <section id="home"  style="background-color: dodgerblue;">
+        <div class="overlay"></div>
+          <div class="container">
+               <div class="row">
+
+                    <div class="col-md-12 col-sm-12">
+                         <div class="home-info">
+                             <h1>Hi, admin! :)<br>Reset user password here</h1>
+                              <h1></h1>
+                              
+                              <div class="subscribe-form">
+                                  <form method="POST" action="http://localhost:8081/admin_reset/pwd">
+
+                                      {{#if this.info}}
+                                      <div class="my-notify-info">{{this.info}}</div>
+                                      {{else if this.message}}
+                                      <div class="my-notify-success">{{this.message}}</div>
+                                      {{else if this.warning}}
+                                      <div class="my-notify-warning">{{this.warning}}</div>
+                                      {{else}}
+                                      <div class="my-notify-error">{{error}}</div>
+                                      {{/if}}
+                                      <hr>
+                                      <br>
+                                      <p style="color:white">Reset <a href="/admin_reset">another account</a> </p>
+                                      <br>
+                                      <label for="password" style="color:white;"><b>Password</b></label>
+                                      <input type="password" name="password" class="form-control" placeholder="Enter the password" required="" id="password">
+                                      <br>
+                                      <label for="passwordRP" style="color:white;"><b>Repeat Password</b></label>
+                                      <input type="password" name="passwordRP" class="form-control" placeholder="Confirm the password" required="" id="passwordRP">
+                                      <br>
+
+                                      <input type="submit" value="submit" class="form-control" id="bt" style="background-color:lightsteelblue;" />
+                                  </form>
+                                  <br>
+                                  <p style="color:white">click <a href="/admin_account_page">here</a> go back to admin page</p>
+                              </div>
+                         </div>
+                    </div>
+
+               </div>
+          </div>
+     </section>
+
+     <!-- SCRIPTS -->
+     <script src="http://localhost:8081/js/jquery.js"></script>
+     <script src="http://localhost:8081/js/bootstrap.min.js"></script>
+     <script src="http://localhost:8081/js/vegas.min.js"></script>
+     <script src="http://localhost:8081/js/countdown.js"></script>
+     <script src="http://localhost:8081/js/init.js"></script>
+     <script src="http://localhost:8081/js/custom.js"></script>
+
+</body>
+</html>

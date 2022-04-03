@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>MyPage</title>
+    <link rel="stylesheet" href="fontawesome-5.5/css/all.min.css" />
+    <link rel="stylesheet" href="magnific-popup/magnific-popup.css">
+    <link rel="stylesheet" href="css_main/bootstrap.min.css" />
+    <link rel="stylesheet" href="css_main/templatemo-style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/css/selectize.default.css'>
+
+    <script src="js_main/jquery-1.9.1.min.js"></script>
+    <script src="magnific-popup/jquery.magnific-popup.min.js"></script>
+    <script src="js_main/jquery.singlePageNav.min.js"></script>
+    <script src="js_main/bootstrap.min.js"></script>
+
+    <style>
+        ::placeholder { 
+            color: black;
+        }
+        .searchSID {
+            max-width: 350px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Top section -->
+    <section id="hero" class="text-white tm-font-big tm-parallax">
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-md tm-navbar" id="tmNav">
+            <div class="container">
+                <div class="tm-next">
+                    <a onclick="window.location=''" href="###" class="navbar-brand">U Buy</a>
+                </div>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fas fa-bars navbar-toggler-icon"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto">
+
+                        <li class="nav-item">
+                            <a class="nav-link tm-nav-link" onclick="window.location='admin_reset'" href="###">reset password</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link tm-nav-link" onclick="window.location='admin_account_page'" href="###">admin page</a>
+                        </li>
+                        <li class="nav-item">
+                            {{#if this.login}}
+                            <a class="nav-link tm-nav-link" onclick="window.location='logout/admin'" href="###">Log out</a>
+                            {{else}}
+                            <a class="nav-link tm-nav-link" onclick="window.location='logout/admin'" href="###">Log in</a>
+                            {{/if}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="text-center tm-hero-text-container">
+            <div class="tm-hero-text-container-inner">
+                <h2 class="tm-hero-title">U Buy - User Profile</h2>
+                <br>
+            </div>
+        </div>
+
+        <div class="tm-next tm-intro-next">
+            <a href="#information" class="text-center tm-down-arrow-link">
+                <i class="fas fa-3x fa-caret-down tm-down-arrow"></i>
+            </a>
+        </div>
+    </section>
+
+    <!--Account information-->
+    <section id="information" class="tm-section-pad-top">
+        <div class="tm-intro-text-container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <img id="avatar" src="tmp/{{this.sid}}.jpg" class="rounded-circle shadow-4"
+                         style="width: 150px;" alt="Avatar" onerror="this.src='img/avatar-default-icon.jpg'" />
+                    <h1 class="tm-text-primary mb-4 tm-section-title">User profile</h1><hr class="mr-5"><br>
+                </div>
+                <div class="col-lg-6">
+                    <div class="searchSID">
+                        <br>
+                        <p style="font-size:24px; color:#3496d8">
+                            Select a user
+                        </p><hr class="mr-5">
+                        <form method="POST" action="http://localhost:8081/user_profile" class="mr-5">
+                            <select name="sid" placeholder="Choose a SID..." id="search">
+                                <option value="" disabled selected>Choose a sid</option>
+                                {{{this.myoption}}}
+                            </select>
+                            <input type="submit" value="submit" class="form-control" id="bt" style="background-color: #3496d8; color:white;" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+            <div class="row">
+                <div class="col-lg-6">
+                    <p style="font-size:24px; color:#3496d8">ID:</p>
+                    <p class="mb-4 tm-intro-text">{{this.id}}</p><br>
+                </div>
+                <div class="col-lg-6">
+                    <p style="font-size:24px; color:#3496d8">Name:</p>
+                    <p class="mb-4 tm-intro-text">{{this.name}}</p><br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <p style="font-size:24px; color:#3496d8">SID:</p>
+                    <p class="mb-4 tm-intro-text">{{this.sid}}</p><br>
+                </div>
+                <div class="col-lg-6">
+                    <p style="font-size:24px; color:#3496d8">Email:</p>
+                    <p class="mb-4 tm-intro-text">{{this.email}}</p><br>
+                    <br>
+                </div>
+            </div>
+            <br><br><br>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="Contact" class="tm-section-pad-top tm-parallax-2">
+        <footer class="text-center large tm-footer">
+            <p class="mb-0">
+                Copyright &copy; U Buy
+                - Design: Group C3
+            </p>
+        </footer>
+    </section>
+
+    <!--Script-->
+    <script>
+
+        function getOffSet() {
+            var _offset = 450;
+            var windowHeight = window.innerHeight;
+
+            if (windowHeight > 500) {
+                _offset = 400;
+            }
+            if (windowHeight > 680) {
+                _offset = 300
+            }
+            if (windowHeight > 830) {
+                _offset = 210;
+            }
+
+            return _offset;
+        }
+
+        function setParallaxPosition($doc, multiplier, $object) {
+            var offset = getOffSet();
+            var from_top = $doc.scrollTop(),
+                bg_css = 'center ' + (multiplier * from_top - offset) + 'px';
+            $object.css({ "background-position": bg_css });
+        }
+
+        // Parallax function
+        // Adapted based on https://codepen.io/roborich/pen/wpAsm
+        var background_image_parallax = function ($object, multiplier, forceSet) {
+            multiplier = typeof multiplier !== 'undefined' ? multiplier : 0.5;
+            multiplier = 1 - multiplier;
+            var $doc = $(document);
+            // $object.css({"background-attatchment" : "fixed"});
+            if (forceSet) {
+                setParallaxPosition($doc, multiplier, $object);
+            } else {
+                $(window).scroll(function () {
+                    setParallaxPosition($doc, multiplier, $object);
+                });
+            }
+        };
+
+        var background_image_parallax_2 = function ($object, multiplier) {
+            multiplier = typeof multiplier !== 'undefined' ? multiplier : 0.5;
+            multiplier = 1 - multiplier;
+            var $doc = $(document);
+            $object.css({ "background-attachment": "fixed" });
+            $(window).scroll(function () {
+                var firstTop = $object.offset().top,
+                    pos = $(window).scrollTop(),
+                    yPos = Math.round((multiplier * (firstTop - pos)) - 186);
+
+                var bg_css = 'center ' + yPos + 'px';
+
+                $object.css({ "background-position": bg_css });
+            });
+        };
+
+        $(function () {
+            // Hero Section - Background Parallax
+            background_image_parallax($(".tm-parallax"), 0.30, false);
+            background_image_parallax_2($("#Contact"), 0.80);
+
+            // Handle window resize
+            window.addEventListener('resize', function () {
+                background_image_parallax($(".tm-parallax"), 0.30, true);
+            }, true);
+
+            // Detect window scroll and update navbar
+            $(window).scroll(function (e) {
+                if ($(document).scrollTop() > 120) {
+                    $('.tm-navbar').addClass("scroll");
+                } else {
+                    $('.tm-navbar').removeClass("scroll");
+                }
+            });
+
+            // Close mobile menu after click
+            $('#tmNav a').on('click', function () {
+                $('.navbar-collapse').removeClass('show');
+            })
+
+            // Scroll to corresponding section with animation
+            $('#tmNav').singlePageNav();
+
+            // Add smooth scrolling to all links
+            // https://www.w3schools.com/howto/howto_css_smooth_scroll.asp
+            $("a").on('click', function (event) {
+                if (this.hash !== "") {
+                    event.preventDefault();
+                    var hash = this.hash;
+
+                    $('html, body').animate({
+                        scrollTop: $(hash).offset().top
+                    }, 400, function () {
+                        window.location.hash = hash;
+                    });
+                } // End if
+            });
+
+            // Pop up
+            $('.tm-gallery').magnificPopup({
+                delegate: 'a',
+                type: 'image',
+                gallery: { enabled: true }
+            });
+
+
+        });
+    </script>
+
+    <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/js/standalone/selectize.min.js'></script>
+    <script>
+        $(document).ready(function () {
+            $('#search').selectize();
+        });
+    </script>
+
+</body>
+</html>
+<!--
+
+    Templates are used at first.
+    However, our team change a lot from the original trmplates.
+    They're downloaded from
+    "https://templatemo.com/tm-521-get-ready" and
+    "https://templatemo.com/tm-525-the-town"
+
+-->

@@ -6,8 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>MyPage</title>
     <link rel="stylesheet" href="fontawesome-5.5/css/all.min.css" />
-    <link rel="stylesheet" href="slick/slick.css">
-    <link rel="stylesheet" href="slick/slick-theme.css">
     <link rel="stylesheet" href="magnific-popup/magnific-popup.css">
     <link rel="stylesheet" href="css_main/bootstrap.min.css" />
     <link rel="stylesheet" href="css_main/templatemo-style.css" />
@@ -73,45 +71,51 @@
 
     <!--Account information-->
     <section id="information" class="tm-section-pad-top">
-      <div class="tm-intro-text-container" >
-        <h1 class="tm-text-primary mb-4 tm-section-title">Account information</h1><br>
-        <div class="row">
-          <div class="col-lg-6">
-            <p style="font-size:24px; color:#3496d8">Name:</p>
-            <p class="mb-4 tm-intro-text" >{{this.name}}</p>
-            <p style="font-size:24px; color:#3496d8">SID:</p>
-            <p class="mb-4 tm-intro-text" >{{this.sid}}</p>
-            <p style="font-size:24px; color:#3496d8">Email:</p>
-            <p class="mb-4 tm-intro-text" >{{this.email}}</p>
-            <form action="http://localhost:8081/chat" method="Post">
-              <p style="font-size:24px; color:#3496d8">Chat:</p>
-              <input type="submit" class="tm-btn-primary" style="border-color: white" value="    Chat    "></input>
-            </form>
-            <br><br><br>
-          </div>
-          <div class="col-lg-6">
-              <form action="http://localhost:8081/check_buyer" method="Post">
-                  <p style="font-size:24px; color:#3496d8">Buyer:</p>
-                  <input type="submit" class="tm-btn-primary" style="border-color: white" value="Check Result"></input>
-              </form><br>
-              <form action="http://localhost:8081/check_seller" method="Post">
-                  <p style="font-size:24px; color:#3496d8">Seller:</p>
-                  <input type="submit" class="tm-btn-primary" style="border-color: white" value="Check Result"></input>
-              </form><br>
+        <div class="tm-intro-text-container">
+            <img id="avatar" src="tmp/{{this.sid}}.jpg" class="rounded-circle shadow-4"
+                 style="width: 150px;" alt="Avatar" onerror="this.src='img/avatar-default-icon.jpg'"/>
+            <h1 class="tm-text-primary mb-4 tm-section-title">Account information</h1><br>
+            <div class="row">
+                <div class="col-lg-6">
+                    <p style="font-size:24px; color:#3496d8">Name:</p>
+                    <p class="mb-4 tm-intro-text">{{this.name}}</p>
+                    <p style="font-size:24px; color:#3496d8">SID:</p>
+                    <p class="mb-4 tm-intro-text">{{this.sid}}</p>
+                    <p style="font-size:24px; color:#3496d8">Email:</p>
+                    <p class="mb-4 tm-intro-text">{{this.email}}</p>
+                    <form action="http://localhost:8081/photo" method="get">
+                        <p style="font-size:24px; color:#3496d8">Upload profile photo:</p>
+                        <input type="submit" class="tm-btn-primary" style="border-color: white" value="   photo    ">
+                    </form>
+                    <form action="http://localhost:8081/chat" method="Post">
+                        <p style="font-size:24px; color:#3496d8">Chat:</p>
+                        <input type="submit" class="tm-btn-primary" style="border-color: white" value="    Chat    ">
+                    </form>
+                    <br><br><br>
+                </div>
+                <div class="col-lg-6">
+                    <form action="http://localhost:8081/check_buyer" method="Post">
+                        <p style="font-size:24px; color:#3496d8">Buyer:</p>
+                        <input type="submit" class="tm-btn-primary" style="border-color: white" value="Check Result">
+                    </form><br>
+                    <form action="http://localhost:8081/check_seller" method="Post">
+                        <p style="font-size:24px; color:#3496d8">Seller:</p>
+                        <input type="submit" class="tm-btn-primary" style="border-color: white" value="Check Result">
+                    </form><br>
 
-              <!--Further Improvement-->
-              <form action='http://localhost:8081/forum/mypost' method="get">
-                  <p style="font-size:24px; color:#3496d8">Post:</p>
-                  <input type="submit" class="tm-btn-primary" style="border-color: white" value="View Posts"></input>
-              </form><br>
-              <form action="http://localhost:8081/evaluate" method="Post">
-                  <p style="font-size:24px; color:#3496d8">Evaluate:</p>
-                  <input type="submit" class="tm-btn-primary" style="border-color: white" value="  Evaluate  "></input>
-              </form>
-              <br><br>
-          </div>
+                    <!--Further Improvement-->
+                    <form action='http://localhost:8081/forum/mypost' method="get">
+                        <p style="font-size:24px; color:#3496d8">Post:</p>
+                        <input type="submit" class="tm-btn-primary" style="border-color: white" value="View Posts">
+                    </form><br>
+                    <form action="http://localhost:8081/evaluate" method="Post">
+                        <p style="font-size:24px; color:#3496d8">Evaluate:</p>
+                        <input type="submit" class="tm-btn-primary" style="border-color: white" value="  Evaluate  ">
+                    </form>
+                    <br><br>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
 
     <!-- Contact -->
@@ -125,8 +129,7 @@
     </section>
 
     <!--Script-->
-    <script src="js_main/jquery-1.9.1.min.js"></script>     
-    <script src="slick/slick.min.js"></script>
+    <script src="js_main/jquery-1.9.1.min.js"></script>    
     <script src="magnific-popup/jquery.magnific-popup.min.js"></script>
     <script src="js_main/jquery.singlePageNav.min.js"></script>     
     <script src="js_main/bootstrap.min.js"></script> 
@@ -237,43 +240,7 @@
           gallery: { enabled: true }
         });
 
-        // Gallery
-        $('.tm-gallery').slick({
-          dots: true,
-          infinite: false,
-          slidesToShow: 5,
-          slidesToScroll: 2,
-          responsive: [
-          {
-            breakpoint: 1199,
-            settings: {
-              slidesToShow: 4,
-              slidesToScroll: 2
-            }
-          },
-          {
-            breakpoint: 991,
-            settings: {
-              slidesToShow: 3,
-              slidesToScroll: 2
-            }
-          },
-          {
-            breakpoint: 767,
-            settings: {
-              slidesToShow: 2,
-              slidesToScroll: 1
-            }
-          },
-          {
-            breakpoint: 480,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1
-            }
-          }
-        ]
-        });
+        
       });
     </script>
   </body>
