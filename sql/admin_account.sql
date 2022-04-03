@@ -1,3 +1,6 @@
+
+/* (Create and) use database 'ubuy' in mysql and execute codes below to create table and isert records*/
+
 DROP TABLE IF EXISTS `admin_account`;
 
 CREATE TABLE `admin_account` (
