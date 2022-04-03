@@ -2,8 +2,8 @@
 
 /* Create and use database 'upost' in mysql and execute codes below to create table and isert records*/
 
-/* In database 'ubuy', you should also execute 'account.sql', but it may cause problem as newly registered
-users will not be update to 'ubuy', only the 'account' table in 'ubuy' will be updated. 
+/* In database 'upost', you should also execute 'account.sql', but it may cause problem as newly registered
+users will not be update to 'upost', only the 'account' table in 'ubuy' will be updated. 
 
 I think it's their unobserved bug. You may fix it easily or just write the whole 'post' function from scratch (recommended).
 */
