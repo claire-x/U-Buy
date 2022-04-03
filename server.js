@@ -10,7 +10,7 @@ app.set('view engine', 'html');
 var urlencodedParser = bodyParser.urlencoded({extended: false });
 app.use(bodyParser.json());
 app.use(urlencodedParser);
-app.use(express.static(path.join('.','public')));
+app.use(express.static(path.join('.', 'public')));
 
 // set favourite icon for the website
 var favicon = require('serve-favicon');
@@ -48,7 +48,22 @@ var result_seller = require('./routes/result_seller');
 var process_evaluate = require('./routes/process_evaluate');
 var chat = require('./routes/chat');
 var show = require('./routes/show');
+var admin_login = require('./routes/admin_login');
+var admin_account = require('./routes/admin_account');
+var admin_reset = require('./routes/admin_reset');
+var user_profile = require('./routes/user_profile');
 
+// profile photo upload
+const initRoutes = require("./routes/web");
+global.__basedir = __dirname;
+
+app.use(express.urlencoded({ extended: true }));
+initRoutes(app);
+
+const db = require("./models");
+db.sequelize.sync({ force: true }).then(() => {
+    console.log("Drop and re-sync db.");
+});
 
 app.use("/", index);
 app.use("/login", login);
@@ -64,7 +79,12 @@ app.use('/result_buyer', result_buyer);
 app.use('/result_seller', result_seller);
 app.use('/process_evaluate', process_evaluate);
 app.use('/chat', chat);
-app.use('/show',show);
+app.use('/show', show);
+app.use('/admin_login', admin_login);
+app.use('/admin_account_page', admin_account);
+app.use('/admin_reset', admin_reset);
+app.use('/user_profile', user_profile);
+
 
 /**
 * ----------------------------------------------

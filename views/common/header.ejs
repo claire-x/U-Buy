@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>U Buy Forum</title>
+<title>U Buy</title>
 <link rel='stylesheet' href='/stylesheets/style.css' />
 <link rel="stylesheet" href="/css/bootstrap_header.min.css">
 
@@ -11,12 +11,12 @@
   <h1 style="color:white;">
       <% if(user.name){ %>
 
-      Welcome to U Buy Forum, <%= user.name %>
+      Welcome to U Buy, <%= user.name %>
       <a href="/logout" class="btn btn-primary pull-right">
           log out
       </a>
       <% }else{ %>
-        Welcome to U Buy Forum
+        Welcome to U Buy
         <a href="/signup" class="btn btn-primary pull-right">
           sign up
       </a>

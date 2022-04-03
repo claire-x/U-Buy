@@ -1,14 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\public",
-    "\\public\\css_main",
-    "\\public\\fontawesome-5.5",
-    "\\public\\magnific-popup",
+    "\\plugin",
     "\\routes",
     "\\sql",
     "\\views"
   ],
-  "SelectedNode": "\\plugin",
   "PreviewInSolutionExplorer": false
 }

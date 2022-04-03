@@ -1,4 +1,5 @@
 /* ref: https://github.com/LI-YUXIN-Ryan-Garcia/CUPar-CSCI3100-Project.git */
+
 DROP TABLE IF EXISTS `account`;
 
 CREATE TABLE `account` (
