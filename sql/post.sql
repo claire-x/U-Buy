@@ -1,4 +1,7 @@
 /* ref: https://github.com/LI-YUXIN-Ryan-Garcia/CUPar-CSCI3100-Project.git */
+
+/* (Create and) use database 'upost' in mysql and execute codes below to create table and isert records*/
+
 DROP TABLE IF EXISTS `post`;
 
 CREATE TABLE `post` (
