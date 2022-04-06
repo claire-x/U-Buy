@@ -29,7 +29,7 @@
       <nav class="navbar navbar-expand-md tm-navbar" id="tmNav">              
         <div class="container">   
           <div class="tm-next">
-              <a onclick="window.location=''"href="###" class="navbar-brand">CU Par</a>
+              <a onclick="window.location=''"href="###" class="navbar-brand">U Buy</a>
           </div>             
             
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" 
@@ -38,36 +38,39 @@
           </button>
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item">
-                  <a class="nav-link tm-nav-link" onclick="window.location='Roommate'"href="###">Roommate</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link tm-nav-link" onclick="window.location='Teammate'"href="###">Teammate</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link tm-nav-link"  onclick="window.location='forum'"href="###">Post</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link tm-nav-link" onclick="window.location='account_page'"href="###">{{this.username}}</a>
-              </li>
-              <li class="nav-item">
-                {{#if this.login}}
-                <a class="nav-link tm-nav-link" onclick="window.location='logout'" href="###">Log out</a>
-                {{else}}
-                <a class="nav-link tm-nav-link" onclick="window.location='logout'" href="###">Log in</a>
-                {{/if}}
-              </li>                          
-            </ul>
-          </div>        
+              <ul class="navbar-nav ml-auto">
+                  <li class="nav-item">
+                      <a class="nav-link tm-nav-link" onclick="window.location='Chat'" href="###">Chat</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link tm-nav-link" onclick="window.location='Buyer'"href="###">Buyer</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link tm-nav-link" onclick="window.location='Seller'"href="###">Seller</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link tm-nav-link" onclick="window.location='forum'" href="###">Post</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link tm-nav-link" onclick="window.location='account_page'" href="###">{{this.username}}</a>
+                  </li>
+                  <li class="nav-item">
+                      {{#if this.login}}
+                      <a class="nav-link tm-nav-link" onclick="window.location='logout'" href="###">Log out</a>
+                      {{else}}
+                      <a class="nav-link tm-nav-link" onclick="window.location='logout'" href="###">Log in</a>
+                      {{/if}}
+                  </li>
+              </ul>
+          </div>       
         </div>
       </nav>
       
       <div class="text-center tm-hero-text-container">
         <div class="tm-hero-text-container-inner">
-            <h2 class="tm-hero-title">CU Par - Roommate</h2>
+            <h2 class="tm-hero-title">U Buy--check the buyer</h2>
             <p class="tm-hero-subtitle">
-              Find your Roommate here!
+              Find your Buyer here!
               <br />Come on!
             </p>
         </div>        
@@ -75,43 +78,59 @@
       
     
       <div class="tm-next tm-intro-next">
-        <a href="#Roommate" class="text-center tm-down-arrow-link">
+        <a href="#Buyer" class="text-center tm-down-arrow-link">
           <i class="fas fa-3x fa-caret-down tm-down-arrow"></i>
         </a>
       </div>
           
     </section>
 
+
      <!--Main Part-->
-     <section id="Roommate" class="tm-section-pad-top"  style="text-align:center">
+     <section id="Buyer" class="tm-section-pad-top"  style="text-align:center">
         <div class="container">
+          <div class="span6">
+              <nav>
+                  <a href="#First" style="font-size:24px; color:#3496d8">{{this.r_object}}</a> 
+                  <a href="#Second style="font-size:24px; color:#3496d8"">{{this.r_object2}}</a> 
+                  <a href="#Third" style="font-size:24px; color:#3496d8">{{this.r_object3}}</a> 
+                  <a href="#Fourth" style="font-size:24px; color:#3496d8">{{this.r_object4}}</a>
+              </nav>
+          </div>
+        </div>
+
+        <div class="container" id="First">
             <br>
             <p style="font-size:24px; color:#3496d8">
               Congratulation!
             </p>
             <p style="font-size:24px; color:#3496d8">
-              We have found your roommate! Please check his/her information.
+              We have found your buyer! Please check his/her information below.
             </p>
             <br><br><br>
-            <p style="font-size:24px">Name：{{this.r_name}}</p>
-            <p style="font-size:24px">Sex：{{this.r_sex}}</p>
             <p style="font-size:24px">SID：{{this.r_sid}}</p>
-            <p style="font-size:24px">Remark：{{this.r_remark}}</p>
             <br>
             <p style="font-size:24px">Status：{{this.r_status}}</p>
-            <p style="font-size:24px">Chatting Room No. {{this.r_result_id}}</p>
+            <p style="font-size:24px">Object：{{this.r_object}}</p>
+            <p style="font-size:24px">Remark：{{this.r_remark}}</p>
             <br><br>
-            <form action="http://localhost:8081/result_roommate" method="Post">
+            <form action="http://localhost:8081/result_buyer" method="Post">
               <p style="font-size:24px; color:#3496d8">Your decision:</p>
-              <p style="font-size:20px; color:#3496d8">(If your status is 'Success', then you can't refuse it.)</p>
-                          <p style="font-size:20px; color:#3496d8">(which means all of your roommate accept the result.)</p>
-              <p style="font-size:20px; color:#3496d8">(So please make your decision seriously.)</p>
+              <br><br>
+              <p style="font-size:20px; color:#3496d8">Please notice that</p>
+              <p style="font-size:20px; color:#3496d8">If your status is 'Success', then your buyer has already accept the result, you can't refuse or cancel it.</p>
+              <p style="font-size:20px; color:#3496d8">If your status is 'waiting for reply', then your buyer hasn't refuse it yet, you may check the status later.</p>
+              <p style="font-size:20px; color:#3496d8">You may select 'Cancel' when your status is 'waiting for reply', then this object will not be matched any more.</p>
+              <p style="font-size:20px; color:#3496d8">So please make your decision seriously.</p>
               <input type="radio" name="result" value="accept" required> Accept
               <br><br>
               <input type="radio" name="result" value="refuse"> Refuse
               <br><br>
+              <input type="radio" name="result" value="end"> Cancel
+              <br><br>
               <input type="submit" class="tm-btn-primary" style="border-color: white" value="Submit"></input>
             </form>
+            <br><br>
             <br><br>
             
         </div>
@@ -120,38 +139,12 @@
 
     <!-- Contact -->
     <section id="Contact" class="tm-section-pad-top tm-parallax-2">
-      <div class="container tm-container-COntact">
-        <div class="row">
-            <div class="col-12">
-                <h2 class="mb-4 tm-section-title">Contact</h2>
-                <div class="mb-5 tm-underline">
-                  <div class="tm-underline-inner"></div>
-                </div>
-                <p class="mb-5">
-                  If you have problems using this website, please contact us.<br> <br> 
-                </p>
-            </div>
-            
-            <div class="text-center col-12">
-                  <i class="fas fa-3x fa-phone mr-4"></i>
-                  <span class="mb-0">3100-0001</span>
-              </a>
-              <br>  <br> <br> <br> <br> <br>             
-            </div>
-            <div class="text-center col-12">
-                  <i class="fas fa-3x fa-envelope mr-4"></i>
-                  <span class="mb-0">jack123qd@hotmail.com</span>
-              </a>              
-            </div>
-        </div>
-      </div>
       <footer class="text-center large tm-footer">
           <p class="mb-0">
-            Copyright &copy; CUPar 
-            
-            - Design: Group 01
+            Copyright &copy; U Buy 
+            - Design: Group C3
           </p>
-        </footer>
+      </footer>
     </section>
     <script src="js_main/jquery-1.9.1.min.js"></script>     
     <script src="slick/slick.min.js"></script>
