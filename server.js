@@ -65,6 +65,14 @@ db.sequelize.sync({ force: true }).then(() => {
     console.log("Drop and re-sync db.");
 });
 
+// Item photo upload
+const initRoutes2 = require("./routes/ItemPhoto");
+global.__basedir = __dirname;
+
+app.use(express.urlencoded({ extended: true }));
+initRoutes2(app);
+
+
 app.use("/", index);
 app.use("/login", login);
 app.use('/signup', signup);
