@@ -18,28 +18,28 @@
   <body>
     <div class="container">
       <div class="row">
-        <div class="col-sm-8 mt-3">
-          <h4> Upload your profile photo</h4>
+          <div class="col-sm-8 mt-3">
+              <h4> Upload your profile photo</h4>
 
-          <form
-            class="mt-4"
-            action="/photo/upload"
-            method="POST"
-            enctype="multipart/form-data"
-          >
-            <div class="form-group">
-              <input
-                type="file"
-                name="file"
-                id="input-files"
-                class="form-control-file border"
-              />
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
-        </div>
+              <form class="mt-4"
+                    action="/photo/upload"
+                    method="POST"
+                    enctype="multipart/form-data">
+                  <div class="form-group">
+                      <input type="file"
+                             name="file"
+                             id="input-files"
+                             class="form-control-file border" />
+                  </div>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+              <hr />
+              <br><h5> Want to upload later? </h5><br>
+              <form action='http://localhost:8081/account_page' method="get">
+                  <button type="submit" class="btn btn-primary">Go back</button>
+              </form>
+          </div>
       </div>
-      <hr />
       <div class="row">
         <div class="col-sm-12">
           <div class="preview-images"></div>

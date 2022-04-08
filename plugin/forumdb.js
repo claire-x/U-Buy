@@ -6,10 +6,25 @@ var pool = mysql.createPool({
     host : 'localhost',
     user : 'root',
     password : config.db_pwd,
-    database : 'upost'
+    database: config.db_name
 });
 
-var dbprocess={
+var dbprocess = {
+
+    delete: function (postid, callback) {
+        pool.getConnection(function (err, connection) {
+            if (err) throw err;
+            let strSql = 'Delete from `post` WHERE `id` = ' + postid;
+            connection.query(strSql, function (err, result) {
+                connection.release();
+                if (err) {
+                    console.error(err);
+                }
+                callback(result);
+            })
+        });
+    },
+
     // change the status of post in database to private using "update"
     setPrivate:function(postid,params,callback){
         pool.getConnection(function(err,connection){
