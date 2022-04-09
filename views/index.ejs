@@ -14,7 +14,7 @@ Back to Homepage
               <div class="text-muted pull-right">
                   <%= data[i].createtime %>
               </div>
-              <a href="/post/<%=data[i].id %>.html" ><%=data[i].title %></a>
+              <a href="/post/<%=data[i].id %>.html" ><%=data[i].title %></a> | <%= data[i].object %> finding <font color="red"><%= data[i].category %></font>
             </div>
            <div class="panel-body">
               Author:<%= data[i].name %>
@@ -26,18 +26,63 @@ Back to Homepage
       <script>alert('No Posts!')</script>  <div class="panel-group">
          </div>
   <% } %>
-    <div class="newpost">
-        <form method="post" role="form">
+    <div class="newpost panel panel-default" style="background-color: lightblue; padding:10px">
+        <h3>Post a trading message here!</h3><hr><br>
+        <form method="post" role="form" enctype="multipart/form-data">
             <div class="form-group">
-                <label for="title" style="color:white;">Title</label>
+                <label for="category"  >You are a </label>
+                <select id="category" name="category" placeholder="Choose a category." required>
+                                <option value="" disabled selected>Buyer/Seller</option>
+                                <option value="Buyer">Seller</option>
+                                <option value="Seller">Buyer</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="title"  >Title</label>
                 <input type="text" class="form-control" id="title" name="title" placeholder="Post title" required>
             </div>
             <div class="form-group">
-                <label for="content" style="color:white;">Post text</label>
-                <textarea class="form-control" id="body" name="body" placeholder="Have a good time!" rows="5" required></textarea>
+                <label for="object"  >Item to trade</label>
+                <select id="object" name="object" placeholder="Choose an item." required>
+                                <option value="" disabled selected>Choose an item</option>
+                                <option value="UGFH1000 textbook">UGFH1000 textbook</option>
+                                <option value="UGFN1000 textbook">UGFN1000 textbook</option>
+                                <option value="Air Pods">Air Pods</option>
+                                <option value="Snacks">Snacks</option>
+                                <option value="Others">Others</option>
+                </select>
             </div>
             <div class="form-group">
-                <input id = "newpost" type="button" value="Post entry" class="submit">
+                <label for="min_price"  >Minimun price</label>
+                <input type="number" id="min_price" name="min_price" min="0" max="1000"> HKD
+            </div>
+            <div class="form-group">
+                <label for="max_price"  >Maximun price</label>
+                <input type="number" id="max_price" name="max_price" min="0" max="1000"> HKD
+            </div>
+            <div class="form-group">
+                <label for="college"  >Pick up place</label>
+                <select id="college" name="college" placeholder="Choose a pick up place." required>
+                                <option value="" disabled selected>Choose a pick up place</option>
+                                <option value="CC College">Chung Chi College</option>
+                                <option value="NA College">New Asia College</option>
+                                <option value="UC College">United College</option>
+                                <option value="Shaw College">Shaw College</option>
+                                <option value="MC College">Morningside College</option>
+                                <option value="SHHo College">S.H.Ho College</option>
+                                <option value="CW College">C.W.Chu College</option>
+                                <option value="WYS College">Wu Yee Sun College</option>
+                                <option value="WS College">Lee Woo Sing College</option>
+                                <option value="No preference">No preference</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="content"  >Remarks</label>
+                <textarea class="form-control" id="body" name="body" placeholder="Leave some remarks." rows="5" required></textarea>
+            </div>
+            <br>
+            <div class="form-group">
+                <input id = "newpost" type="button" value="Post it" class="submit">
             </div>
         </form>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -49,19 +94,36 @@ Back to Homepage
 
             var title = $('#title').val();
                 content = $('#body').val();
-            if(!(title && content)){
+                college = $('#college').val();
+                min_price = $('#min_price').val();
+                max_price = $('#max_price').val();
+                object = $('#object').val();
+                category = $('#category').val();
+                
+
+            if(!(title && content && min_price && max_price && college && object && category)){
               alert('Input can not be empty!');
+              clicked = false;
+              return;
+            }
+
+            if( min_price > max_price ){
+              alert('Min price should be smaller than max price!');
+              clicked = false;
               return;
             }
 
             $.ajax({
               url : '/post/newpost',
-              data : {title:title, content:content},
+              data : {title:title, content:content, min_price:min_price, max_price:max_price, college:college, object:object, 
+              category:category},
               dataType : 'json',
               type : 'get'
             }).done(function(result){
               if(result.code===0){
-                var newpost = '<div class="panel panel-default"><div class="panel-heading"><div class="text-muted pull-right">'+ result.data.createtime +'</div><a href="'+result.data.url+'" title="'+result.data.title+'">'+result.data.title +'</a></div><div class="panel-body">Author:'+result.data.author +'</div></div>';
+                var newpost = '<div class="panel panel-default"><div class="panel-heading"><div class="text-muted pull-right">'+ result.data.createtime +
+                '</div><a href="'+result.data.url+'" title="'+result.data.title+'">'+result.data.title +'</a></div><div class="panel-body">Author:'+result.data.author +
+                '</div></div>';
                 //alert(newpost);
                 $('.panel-group').prepend(newpost);
                 $('#title').val('');
@@ -69,7 +131,9 @@ Back to Homepage
               }else{
                 alert('operation failed');
               }
+              
               clicked = false;
+              window.location.assign('/photoItem');
             })
           })
         </script>

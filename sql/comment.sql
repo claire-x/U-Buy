@@ -1,12 +1,6 @@
 /* ref: https://github.com/LI-YUXIN-Ryan-Garcia/CUPar-CSCI3100-Project.git */
 
-/* Create and use database 'upost' in mysql and execute codes below to create table and isert records*/
-
-/* In database 'upost', you should also execute 'account.sql', but it may cause problem as newly registered
-users will not be update to 'upost', only the 'account' table in 'ubuy' will be updated. 
-
-I think it's their unobserved bug. You may fix it easily or just write the whole 'post' function from scratch (recommended).
-*/
+/* use database 'ubuy' in mysql and execute codes below*/
 
 DROP TABLE IF EXISTS `comment`;
  
