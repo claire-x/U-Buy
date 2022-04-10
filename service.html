@@ -249,7 +249,7 @@
 
 </div>
 <div class="inputs flex">
-    <input type="text" id="msgInput" class="flex-1" placeholder="在此输入你的对话">
+    <input type="text" id="msgInput" class="flex-1" placeholder="please input">
     <p class="submit" id="msgSubmit">
         send
     </p>
@@ -333,6 +333,8 @@
 
                     if(data == "ok to evaluate")
                         window.location.href = '../evaluate.html?id='+query.cid
+                    if(data == "wait")
+                        window.location.href = '../evaluate3.html'
                     else
                         window.location.href='../evaluate2.html'}
             })}
