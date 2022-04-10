@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Roommate-CU Par</title>
+    <title>Buyer -U Buy</title>
     <link rel="stylesheet" href="fontawesome-5.5/css/all.min.css" />
     <link rel="stylesheet" href="slick/slick.css">
     <link rel="stylesheet" href="slick/slick-theme.css">
@@ -29,7 +29,7 @@
       <nav class="navbar navbar-expand-md tm-navbar" id="tmNav">              
         <div class="container">   
           <div class="tm-next">
-              <a onclick="window.location=''"href="###" class="navbar-brand">CU Par</a>
+              <a onclick="window.location=''"href="###" class="navbar-brand">U Buy</a>
           </div>             
             
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" 
@@ -38,44 +38,47 @@
           </button>
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item">
-                  <a class="nav-link tm-nav-link" onclick="window.location='Roommate'"href="###">Roommate</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link tm-nav-link" onclick="window.location='Teammate'"href="###">Teammate</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link tm-nav-link"  onclick="window.location='forum'"href="###">Post</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link tm-nav-link" onclick="window.location='account_page'"href="###">{{this.username}}</a>
-              </li>
-              <li class="nav-item">
-                {{#if this.login}}
-                <a class="nav-link tm-nav-link" onclick="window.location='logout'" href="###">Log out</a>
-                {{else}}
-                <a class="nav-link tm-nav-link" onclick="window.location='logout'" href="###">Log in</a>
-                {{/if}}
-              </li>                           
-            </ul>
-          </div>        
+              <ul class="navbar-nav ml-auto">
+                  <li class="nav-item">
+                      <a class="nav-link tm-nav-link" onclick="window.location='Chat'" href="###">Chat</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link tm-nav-link" onclick="window.location='Buyer'"href="###">Buyer</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link tm-nav-link" onclick="window.location='Seller'"href="###">Seller</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link tm-nav-link" onclick="window.location='forum'" href="###">Post</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link tm-nav-link" onclick="window.location='account_page'" href="###">{{this.username}}</a>
+                  </li>
+                  <li class="nav-item">
+                      {{#if this.login}}
+                      <a class="nav-link tm-nav-link" onclick="window.location='logout'" href="###">Log out</a>
+                      {{else}}
+                      <a class="nav-link tm-nav-link" onclick="window.location='logout'" href="###">Log in</a>
+                      {{/if}}
+                  </li>
+              </ul>
+          </div>           
         </div>
       </nav>
       
+      
       <div class="text-center tm-hero-text-container">
         <div class="tm-hero-text-container-inner">
-            <h2 class="tm-hero-title">CU Par - Roommate</h2>
-            <p class="tm-hero-subtitle" >
-              Find your Roommate here!
+            <h2 class="tm-hero-title">U Buy--check the buyer</h2>
+            <p class="tm-hero-subtitle">
+              Find your Buyer here!
               <br />Come on!
             </p>
         </div>        
       </div>
-      
     
       <div class="tm-next tm-intro-next">
-        <a href="#Roommate" class="text-center tm-down-arrow-link">
+        <a href="#Buyer" class="text-center tm-down-arrow-link">
           <i class="fas fa-3x fa-caret-down tm-down-arrow"></i>
         </a>
       </div>
@@ -83,14 +86,28 @@
     </section>
 
     <!--Main Part-->
-    <section id="Roommate" class="tm-section-pad-top"  style="text-align:center">
+    <section id="Buyer" class="tm-section-pad-top"  style="text-align:center">
+      <!--4 objects-->
+        <div class="container">
+          <div class="span6">
+            <p style="font-size:24px; color:#3496d8">Your objects wait for Buyer:</p>
+             <nav>
+                  <a style="font-size:20px">{{this.r_object1}} </a> 
+                  <a style="font-size:20px">{{this.r_object2}} </a> 
+                  <a style="font-size:20px">{{this.r_object3}} </a> 
+                  <a style="font-size:20px">{{this.r_object4}} </a>
+              </nav>
+          </div>
+        </div>
       <div class="container">
           <br><br><br><br>
           <p style="font-size:24px; color:#3496d8">
-            Sorry, We haven't find your roommate.
+            Sorry, we haven't find your buyer.
           </p>
           <p style="font-size:24px; color:#3496d8">
-            You could check the result a few hours later.
+            You could check the result later.
+            <br><br>
+            Remember that you are welcomed to browse posts and chat with your potential buyers!
           </p>
           <br><br><br><br> <br><br><br><br>
       </div>
@@ -98,39 +115,13 @@
     
 
     <!-- Contact -->
-    <section id="Contact" class="tm-section-pad-top tm-parallax-2">
-      <div class="container tm-container-COntact">
-        <div class="row">
-            <div class="col-12">
-                <h2 class="mb-4 tm-section-title">Contact</h2>
-                <div class="mb-5 tm-underline">
-                  <div class="tm-underline-inner"></div>
-                </div>
-                <p class="mb-5">
-                  If you have problems using this website, please contact us.<br> <br> 
-                </p>
-            </div>
-            
-            <div class="text-center col-12">
-                  <i class="fas fa-3x fa-phone mr-4"></i>
-                  <span class="mb-0">3100-0001</span>
-              </a>
-              <br>  <br> <br> <br> <br> <br>             
-            </div>
-            <div class="text-center col-12">
-                  <i class="fas fa-3x fa-envelope mr-4"></i>
-                  <span class="mb-0">jack123qd@hotmail.com</span>
-              </a>              
-            </div>
-        </div>
-      </div>
-      <footer class="text-center large tm-footer">
+     <section id="Contact" class="tm-section-pad-top tm-parallax-2">
+    <footer class="text-center large tm-footer">
           <p class="mb-0">
-            Copyright &copy; CUPar 
-            
-            - Design: Group 01
+            Copyright &copy; U Buy 
+            - Design: Group C3
           </p>
-        </footer>
+    </footer>
     </section>
     <script src="js_main/jquery-1.9.1.min.js"></script>     
     <script src="slick/slick.min.js"></script>
