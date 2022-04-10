@@ -70,8 +70,10 @@ router.get('/delete',function(req,res){
         formdb.query_negotiation_process(uid,buyer,seller,function(result){
                 var value = 4;
                 console.log(result)
+                console.log(result[0].negotiation_prase)
                 if (result[0].negotiation_prase ==0){
-                        res.write("ok to evaluate")
+                        console.log("both have not evaluated")
+                        res.write("wait")
 
                         if(type == "seller"){
                                 value = 1
@@ -83,14 +85,44 @@ router.get('/delete',function(req,res){
 
                 }
                 else if(result[0].negotiation_prase ==2 && type == 'seller'){
+                        console.log("wait for other to evaluate")
                         res.write("ok to evaluate")
+                        value = 3
+                }
+                else if(result[0].negotiation_prase == 3 && type == 'seller'){
+                        res.write("wait")
+                        value = 3
+                }
+                else if(result[0].negotiation_prase == 3 && type =='buyer'){
+                        res.write('ok to evaluate')
                         value = 4
+                }
+                else if(result[0].negotiation_prase ==2 && type == 'buyer'){
+                         console.log("keep to wait for other to evaluate")
+                        res.write("wait")
+                        value = 2
                 }
                 else if (result[0].negotiation_prase ==1 && type == 'buyer'){
+                         console.log("wait for other to evaluate")
                         res.write("ok to evaluate")
+                        value = 5
+
+                }
+                else if(result[0].negotiation_prase == 5 && type == 'buyer'){
+                        res.write("wait")
+                        value = 5
+                }
+                else if(result[0].negotiation_prase == 5 && type =='seller'){
+                        res.write('ok to evaluate')
                         value = 4
                 }
-                else {
+                else if (result[0].negotiation_prase ==1 && type == 'seller'){
+                         console.log("keep to wait for other to evaluate")
+                        res.write("wait")
+                        value = 1
+                }
+                else if(result[0].negotiation_prase ==4){
+                         console.log("you both have evaluated")
                         res.write('fail')
                         res.end()
                 }

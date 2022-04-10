@@ -286,8 +286,8 @@ app.get('/chat_post',function(req,res){
   ui = parseInt(json['uid'])
   
   console.log(ci,"---",si,"dsafad",ui)
-  add_id = sid+'tag:'+uid
-  userID = cid+'tag:'+uid
+  add_id = sid+'tag_'+uid
+  userID = cid+'tag_'+uid
   res.cookie('chat_post',sid,{maxAge:1000*3600});
   return_value ={'cid':add_id,'sid':userID}
   res.write(JSON.stringify(return_value));
