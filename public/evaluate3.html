@@ -74,41 +74,9 @@
 
                     <div class="col-md-12 col-sm-12">
                          <div class="home-info">
-                              <h1 id="a_title" name="thetitle">Thanks for using U Buy! <br>You can evaluate a seller here.</h1>
-                              <h1></h1>
-                              
-                              <div class="subscribe-form">
-                                <form name="register"  id="sub">
-                                  
-						          
-						          <p style="font-size:24px; color:#FFFFFF">please remember to mark seller/buyer</p><br>
-                                  
-                                        <p required="" id="sid" maxlength="10", minlength="10">PLEASE MARK</p>
-                                  <br>
-                                  <br> 
-                                  
-                                 
-                                  <br>
-                                  
-								   
-								      <input class="star" value=5 id="star-5"  onclick = "scores()" type="radio" name="star"/>
-								      <label class="star" for="star-5"></label>
-								      <input class="star" value=4 id="star-4" type="radio" onclick = "scores()"  name="star"/>
-								      <label class="star" for="star-4"></label>
-								      <input class="star" value=3 id="star-3" type="radio" onclick = "scores()"  name="star"/>
-								      <label class="star" for="star-3"></label>
-								      <input class="star" value=2 id="star-2" type="radio" onclick = "scores()"  name="star"/>
-								      <label class="star" for="star-2"></label>
-								      <input class="star" value=1 id="star-1" type="radio" onclick = "scores()"  name="star"/>
-								      <label class="star" for="star-1"></label>
-								  
-								  </div>
-                  <br><br>
-                  <br><br><br>
-                                  <input type = "button" value="submit" class="form-control" onclick = "submission()" id="bt" style="background-color:lightsteelblue;" />
-
-                                </form>
-                              </div>    
+                              <h1 id="a_title" name="thetitle">wait for others to click confirm trading!</h1>
+                            
+                         </div>    
                          </div>
                     </div>
                </div>
@@ -147,13 +115,10 @@
      	}
      	
      	function submission() {
-     		//sid = document.getElementById('sid').value
-               var currentPath = window.document.location.href;
-               sid = currentPath.split('=')[1].substring(0,10)
-               console.log(sid)
+     		sid = document.getElementById('sid').value
               
      		var second = confirm("remeber: once you submit evaluation, you can not modify it again")
-               console.log(second)
+
 
      		if(second){
      		console.log('send evaluation',sid,score)
