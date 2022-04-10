@@ -284,9 +284,8 @@ app.get('/chat_post',function(req,res){
   ci = parseInt(json['cid'])
   si = parseInt(req.cookies.islogin.sid);
   ui = parseInt(json['uid'])
-  formdb = require('../plugin/forumdb')
-  formdb.add_negotiation_process(ui,si,ci);
-   console.log(ci,"---",si,"dsafad",ui)
+  
+  console.log(ci,"---",si,"dsafad",ui)
   add_id = sid+'tag:'+uid
   userID = cid+'tag:'+uid
   res.cookie('chat_post',sid,{maxAge:1000*3600});
@@ -395,6 +394,8 @@ function contains(arr, obj) {
             }});
 }});
   //res.redirect( "localhost:8081/chat2?cid="+cid+"&sid="+sid);
+  formdb = require('../plugin/forumdb')
+  formdb.add_negotiation_process(ui,si,ci);
   res.end()
 
 })
