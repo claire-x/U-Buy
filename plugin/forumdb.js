@@ -10,6 +10,52 @@ var pool = mysql.createPool({
 });
 
 var dbprocess = {
+    update_negotiation_process: function(uid,sid,cid,value,callback){
+        pool.getConnection(function(err,connection) {
+            if (err) throw err;
+            let sql = 'UPDATE `negotiation_record` set `negotiation_prase` ='+value+' where (`uid` ='+uid+' AND `buyer_id` = '+sid+' AND `seller_id` ='+cid+');'
+            console.log(sql)
+            connection.query(sql, function(err,result){
+                connection.release();
+                if(err){
+                    console.error(err)
+                }
+                callback(result);
+            }) 
+        })
+
+    },
+    query_negotiation_process: function(uid,sid,cid,callback){
+        pool.getConnection(function(err,connection) {
+            if (err) throw err;
+            let sql = 'SELECT negotiation_prase from negotiation_record where (`uid` ='+uid+' AND `buyer_id` = '+sid+' AND `seller_id` ='+cid+');'
+            console.log(sql)
+            connection.query(sql, function(err,result){
+                connection.release();
+                if(err){
+                    console.error(err)
+                }
+                callback(result);
+            })
+        })
+
+    },
+
+
+    add_negotiation_process: function(uid,sid,cid){
+        pool.getConnection(function(err,connection) {
+            if (err) throw err;
+            let sql = 'INSERT INTO `negotiation_record` VALUES ('+uid+','+sid+','+cid+', 0);'
+            console.log(sql)
+            connection.query(sql, function(err,result){
+                connection.release();
+                if(err){
+                    console.error(err)
+                }
+            })
+        })
+
+    },
 
     delete: function (postid, callback) {
         pool.getConnection(function (err, connection) {
@@ -91,7 +137,7 @@ var dbprocess = {
     displayPosts : function(callback){
         pool.getConnection(function(err, connection){
             if(err) throw err;
-            let strSql ='SELECT `post`.*, name FROM `post`, `account` WHERE `post`.`status`= 0 AND `post`.`uid`=`account`.`id` ';
+            let strSql ='SELECT `post`.*, name,SID FROM `post`, `account` WHERE `post`.`status`= 0 AND `post`.`uid`=`account`.`id` ';
             connection.query(strSql, function(err, result){
                 connection.release();
                 if(err) 

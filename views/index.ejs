@@ -19,6 +19,7 @@ Back to Homepage
            <div class="panel-body">
               Author:<%= data[i].name %>
            </div>
+           <div class="form-group"><input id = "new_chat"  type="button" value="go to chat" class = "chat" onclick="gotochat()" values = <%=data[i].SID %> uid = <%=data[i].id%> ></div>
        </div>
       <% } %>
     </div>
@@ -138,4 +139,85 @@ Back to Homepage
           })
         </script>
     </div>
+ <script type="text/javascript">
+
+     
+      function gotochat(e) {
+       
+        var ev = e || event;
+        var iTarget = ev.srcElement || ev.target;
+        cid_id = iTarget.attributes['values'].value;
+        console.log('attributes is ',cid_id)
+        var uid = iTarget.attributes['uid'].value;
+        console.log("uid is",uid);
+        ajax({
+                   'url':'http://localhost:8081/show/chat_post',
+                   'type':'get',
+                   'data':{'cid':cid_id,'uid':uid},
+                   success:function(data){
+                   data = JSON.parse(data)
+                   console.log('successfully create a chat from post');
+                  
+                   
+                   window.location.href = "./chat2?sid="+data.cid+"&cid="+data.sid;
+
+
+
+
+
+                   }});
+
+
+
+
+
+
+        //window.location.href = "./chat1?sid="+k+"&cid="+cid_id;
+    
+    }
+    function ajax(json){
+         if(window.XMLHttpRequest){
+              var ajax = new XMLHttpRequest();
+         }
+         else{
+              var ajax = new ActiveXObject( "Microsoft.XMLHTTP" );
+         }
+    
+         if(json.type=='get'){
+              ajax.open('get',json.url+'?'+JsonToString(json.data),true);
+              ajax.send();
+         }
+         else if(json.type=='post'){
+              ajax.open('post',json.url,true);
+              ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+              ajax.send(JsonToString(json.data));
+         }
+         
+    
+         ajax.onreadystatechange = function(){
+              if(ajax.readyState == 4){
+                   if(ajax.status>=200 && ajax.status<300 || ajax.status == 304){
+                        json.success(ajax.responseText);
+    
+                   }
+                   else{
+                        json.error && json.error();
+                   }
+              };
+         };
+         function JsonToString(json){
+              var arr = [];
+              for(var i in json){
+                   arr.push(i+'='+json[i]);
+              };
+              return arr.join('&');
+         }
+    } 
+
+
+
+
+
+
+    </script>
 <% include common/footer.ejs %>

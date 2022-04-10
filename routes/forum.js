@@ -14,6 +14,7 @@ router.get('/', function(req, res) {
         // show all public in database
 	    datainDB.displayPosts(function(result){
             // deal with situation that there's no public post
+            console.log(result)
             postnum = result.length;
             if(result.length != 0)
 		    res.render('index.ejs', { data:result,datalength:postnum });
