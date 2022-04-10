@@ -36,7 +36,7 @@ router.post('/', function (req, res) {
             if(result){
             for(var i = 0; i < result.length; i++)
                 {option[i]={'result':result[i].result, 'object':result[i].object,
-                'id':result[i].id,'res1':result[i].res1,'res2':result[i].res2,
+                'pid2':result[i].pid2,'res1':result[i].res1,'res2':result[i].res2,
                 'user_id1':result[i].user_id1,'user_id2':result[i].user_id2};}
             }
             // If return directly, it will return undefined. So we need call back function to receive the data.
@@ -74,16 +74,16 @@ router.post('/', function (req, res) {
   
     // function to delete ready_match 
     function DeleteObj() {
-        this.select=function(id,obj){
-            objToDel = obj;
-            var sql = 'DELETE FROM ready_match where user_sid = ' + id  +' AND category = "B" AND object =?';
-            pool.query(sql,[objToDel],function(err){
+        this.select=function(id,pid){
+            var sql = 'DELETE FROM post where user_sid = ' + id  +' AND category = "Buyer" AND id =' + pid;
+            pool.query(sql,function(err){
                 if(err){console.log(err);}
             });
         };
     }
     module.exports = DeleteObj;
     DelObj = new DeleteObj();
+    
 
     datas = Array;  
     ChRE.select(function(rdata){
@@ -97,10 +97,10 @@ router.post('/', function (req, res) {
             {
                 var num;
                 if(datas[0].user_id2==userID)
-                { otherID = datas[0].user_id1; num = 1; }
+                { otherID = datas[0].user_id1; num = 2; }
 
                 // matching is successful
-                if((datas[0].res1==1 && num==2)||(datas[0].res2==1 && num==1))
+                if(datas[0].res1==1 && num==2)
                 { UpRE.select(userID,1); }
                 // waiting for the other one's acceptance
                 else{ SiupRE.select(userID,num,1); }
@@ -112,9 +112,15 @@ router.post('/', function (req, res) {
             }
             else {
                 UpRE.select(userID,-1);
-                DelObj.select(userID,datas[0].object); 
+                DelObj.select(userID,datas[0].pid2); 
             }
 
+        }
+        else {
+            if(req.body.result=="end") {
+                UpRE.select(userID,-1);
+                DelObj.select(userID,datas[0].pid2); 
+            }
         }
     },userID);
   
