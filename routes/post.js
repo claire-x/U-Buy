@@ -124,7 +124,8 @@ router.get('/newpost', function(req, res){
 		// get the parameters sent from frontend request
 		let title = req.query.title;
 		let	content = req.query.content;
-        let userID = req.cookies.islogin.id;
+		let userID = req.cookies.islogin.id;
+		let user_sid = req.cookies.islogin.sid;
         let user_name = req.cookies.islogin.name;
 		let createtime = new Date().toString().substr(0, 25);
 		let min_price = req.query.min_price;
@@ -133,7 +134,7 @@ router.get('/newpost', function(req, res){
 		let object = req.query.object;
 		let category = req.query.category;
 
-		let params = { uid: userID, title: title, content: content, createtime: createtime, price_min: min_price, price_max: max_price, college: college, object: object, category: category};
+		let params = { user_sid: user_sid, uid: userID, title: title, content: content, createtime: createtime, price_min: min_price, price_max: max_price, college: college, object: object, category: category};
 
 		// send the params to backend and process
 		postProcess.addPost(params, function(result){

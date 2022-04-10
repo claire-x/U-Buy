@@ -53,6 +53,7 @@ var admin_account = require('./routes/admin_account');
 var admin_reset = require('./routes/admin_reset');
 var user_profile = require('./routes/user_profile');
 
+
 // profile photo upload
 const initRoutes = require("./routes/web");
 global.__basedir = __dirname;
@@ -85,13 +86,14 @@ app.use('/check_buyer', check_buyer);
 app.use('/check_seller', check_seller);
 app.use('/result_buyer', result_buyer);
 app.use('/result_seller', result_seller);
-app.use('/process_evaluate', process_evaluate);
+app.use('/process_evaluation', process_evaluate);
 app.use('/chat', chat);
 app.use('/show', show);
 app.use('/admin_login', admin_login);
 app.use('/admin_account_page', admin_account);
 app.use('/admin_reset', admin_reset);
 app.use('/user_profile', user_profile);
+
 
 
 /**
@@ -181,41 +183,12 @@ app.use('/chat', urlencodedParser, function (req, res) {
 */
 let http = require('http').Server(app);
 let io = require('socket.io')(http);
-
 app.get('/chat1',urlencodedParser, function (req, res) {
-    console.log('the requesit is')
-    console.log(req.query.cid);
-    fs.readFile('./all_dialogues.txt','utf8',function(err,data){
-    if(err){
-      console.log('err:'+err);
-    }
-    else{
-
-      function toString(data,need){
-        if(data.indexOf(need)!=-1){
-          data = data.replace(need,'"');
-          return toString(data,need);
-        }
-        else{
-          return data;
-        }
-      };
-      var l = toString(data,'‘');
-      var r = toString(l,'’');
-      //var lastArr = JSON.parse(r);
-
-      res.write(r);
-      res.end();
-      //var d = data.replace('‘','"');
-      //var c = d.replace('’','"');
-      //console.log(JSON.parse(c));
-      //console.log(JSON.parse(data));
-      //console.log(eval('('+data+')'));
-    }
-  });
+    
     res.sendFile(__dirname+'/client.html'); 
 })
 app.get('/chat2', function (req, res) {
+    
     res.sendFile(__dirname+'/service.html');
 })
 
@@ -257,16 +230,30 @@ class Message {
         this.req = req
         this.userInfo = this.req.userInfo || {}
         this.msg = this.req.msg || ''
+        this.cid = this.userInfo.customer.id
+        this.sid = this.userInfo.service.id
+        this.sender = ""
+        if(this.userInfo.customer.isSender){this.sender = "cid"}
+        else{this.sender = "sid"}
+        
+
     }
     getSenderKey(){
+        let sender = "";
         if(this.userInfo.customer.isSender){
+            
+
+
             return `cid${this.userInfo.customer.id}`
         } else {
+
             return `sid${this.userInfo.service.id}`
         }
+        
     }
     getReceiverKey(){
         if(this.userInfo.customer.isSender){
+
             return `sid${this.userInfo.service.id}`
         } else {
             return `cid${this.userInfo.customer.id}`
@@ -303,10 +290,36 @@ io.on('connect', function (socket) {
     })
     socket.on('send private message', function(req){
         let msgObj = new Message(req)
+        
+        let cid = msgObj.cid.toString()
+        let sid = msgObj.sid.toString()
+        
+        let filename = './chat_record/cid_'+cid+'sid_'+sid+'.txt'
+        fs.readFile(filename,'utf8',function(err,data){
+                let sender = msgObj.sender
+                console.log('successfully opened the file sender is',sender)
+                if(err){
+                    console.log('err is:'+err)
+                }
+                else{
+                    k = JSON.parse(data)
+                    z = []
+                    z.push(sender) 
+                    z.push(msgObj.msg)
+                    k.push(z)
+                    k = JSON.stringify(k)
+                    fs.writeFile('./chat_record/cid_'+cid+'sid_'+sid+'.txt',k,function(err){
+                        if(err){console.log('the data recourd addition err:'+err);}
+                        else{console.log('succeed to add the data',k)}
+                    })
+
+                }
+            });
         console.log('send private message', req);
         msgObj.send()
     })
 })
+
 
 /**
 * ----------------------------------------------

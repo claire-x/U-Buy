@@ -53,7 +53,8 @@ app.get('/delete',function (req,res){
 	let userID = req.cookies.islogin.sid; 
 	var json = urlLib.parse(req.url,true).query;
 	type = json['type'];
-	delete_id = json['id'];
+	delete_id = json['id'].substring(0,10);;
+  console.log('begin deletion',delete_id);
 	//console.log(type+ 'dfs' +delete_id);
 	fs.readFile('./chat_record/dialogue_relation.txt','utf8',function(err,data){
     if(err){
@@ -77,15 +78,27 @@ app.get('/delete',function (req,res){
     array = dict[userID][type];
     array2 = [];
     for(var i = 0; i< array.length;i++){
-    	if(array[i] != delete_id){
+    	if(array[i] != json['id']){
     		array2.push(array[i]);
     	}}
     dict[userID][type] = array2;
+    //filename = './chat_record/'
 
-    if (type == "sid"){ type = "cid"}
-    else {type = "sid"}
+    if (type == "sid"){ 
+      type = "cid";}
+      //filename = filename + type+"_"+userID+"sid_"+delete_id+".txt"};
+    else{type = "sid";}
+          //filename = filename +"cid_"+delete_id+type+"_"+userID+".txt"};
+        
+    //fs.unlink(filename,function(params) {
+    //console.log("delete chat records");
+//});
     array = dict[delete_id][type];
     array2 = [];
+    if (json['id'].length>10)
+      userID = userID + json['id'].substring(10)
+      console.log("modify userID",userID)
+    
     for(var i = 0; i< array.length;i++){
     	if(array[i] != userID){
     		array2.push(array[i]);
@@ -131,8 +144,9 @@ app.get('/create',function (req,res){
 
 	fs.readFile('./chat_record/dialogue_relation.txt','utf8',function(err,data){
     if(err){
-    	res.end();
       console.log('err:'+err);
+    	res.end();
+      
     }
     else{
 
@@ -159,16 +173,58 @@ function contains(arr, obj) {
     return false;}
 
     if (!(add_id in dict)){
+      let filename = 'cid_'+userID+'sid_'+add_id+'.txt';
+      k = []
+      fs.writeFile(filename,JSON.stringify(k),function(err){
+        if(err){
+          res.write('fail to create file to store chat record')
+          res.end()
+
+
+        }
+      })
     	dict[add_id] = {"cid":[userID],"sid":[]};}
    
     if (!((contains(dict[add_id]['cid'],userID) || contains(dict[add_id]['sid'],userID)))) {
+      let filename = './chat_record/cid_'+userID+'sid_'+add_id+'.txt';
+      k = []
+      fs.writeFile(filename,JSON.stringify(k),function(err){
+        if(err){
+          res.write('fail to create file to store chat record')
+          res.end()
+
+
+        }
+      })
     		dict[add_id]['cid'].push(userID);
     	}
     
     if (!(userID in dict)){
+      let filename = './chat_record/cid_'+userID+'sid_'+add_id+'.txt';
+      k = []
+      fs.writeFile(filename,JSON.stringify(k),function(err){
+        if(err){
+          res.write('fail to create file to store chat record')
+          res.end()
+
+
+        }
+      })
+
     	dict[userID] = {"cid":[],"sid":[add_id]};}
    
     if (!((contains(dict[userID]['cid'],add_id) || contains(dict[userID]['sid'],add_id)))) {
+      let filename = './chat_record/cid_'+userID+'sid_'+add_id+'.txt';
+      k = []
+      fs.writeFile(filename,JSON.stringify(k),function(err){
+        if(err){
+          res.write('fail to create file to store chat record')
+          res.end()
+
+
+        }
+      })
+
     	judge = "successfully added a new friend!!!!!!!";
     	dict[userID]['sid'].push(add_id);
     	}
@@ -187,14 +243,161 @@ function contains(arr, obj) {
 							res.end();
 						}
 						else{
-							console.log('创立成功');
+							console.log('successfully create a new dialogue');
 							res.write(judge);
 							res.end();
 						}});
 }});}
     });
 });
+app.get('/record',function(req,res){
+  console.log("start to pass the information")
 
+  var json = urlLib.parse(req.url,true).query;
+  console.log(json)
+  cid = json['cid']
+  sid = json['sid']
+  if(sid.length >10 && cid.length == 10)
+    cid += sid.substring(10)
+  if(cid.length > 10 && sid == 10)
+    sid += cid.substring(10)
+
+
+  let filename = './chat_record/cid_'+cid+'sid_'+sid+'.txt'
+  fs.readFile(filename,'utf8',function(err,data){
+    if(err){console.log('err:',err)}
+    else {
+      console.log('pass',data,'to the client side')
+      res.write(data)
+      res.end()
+    }
+  })
+  
+});
+app.get('/chat_post',function(req,res){
+  var json = urlLib.parse(req.url,true).query;
+  console.log(json)
+  cid = json['cid']
+  sid = req.cookies.islogin.sid;
+  uid = json['uid']
+  console.log(cid,"---",sid,"dsafad",uid)
+  ci = parseInt(json['cid'])
+  si = parseInt(req.cookies.islogin.sid);
+  ui = parseInt(json['uid'])
+  formdb = require('../plugin/forumdb')
+  formdb.add_negotiation_process(ui,si,ci);
+   console.log(ci,"---",si,"dsafad",ui)
+  add_id = sid+'tag:'+uid
+  userID = cid+'tag:'+uid
+  res.cookie('chat_post',sid,{maxAge:1000*3600});
+  return_value ={'cid':add_id,'sid':userID}
+  res.write(JSON.stringify(return_value));
+  console.log('change chat from posts, diction is ')
+  fs.readFile('./chat_record/dialogue_relation.txt','utf8',function(err,data){
+    if(err){
+      console.log('err:'+err);
+      res.end();
+      
+    }
+    else{
+
+      function toString(data,need){
+        if(data.indexOf(need)!=-1){
+          data = data.replace(need,'"');
+          return toString(data,need);
+        }
+        else{
+          return data;
+        }
+      }
+    var l = toString(data,'‘');
+    var r = toString(l,'’');
+    dict = JSON.parse(r);
+console.log('change chat from posts, diction is',dict)
+    
+function contains(arr, obj) {
+    var i = arr.length;
+    while (i--) {
+        if (arr[i] == obj) {
+            return true;
+        }
+    }
+    return false;}
+
+    if (!(sid in dict)){
+      let filename = 'cid_'+userID+'sid_'+add_id+'.txt';
+      k = []
+      fs.writeFile(filename,JSON.stringify(k),function(err){
+        if(err){
+          res.end()
+
+
+        }
+      })
+      dict[sid] = {"cid":[add_id],"sid":[]};}
+   
+    if (!((contains(dict[sid]['cid'],userID)))) {
+      let filename = './chat_record/cid_'+userID+'sid_'+add_id+'.txt';
+      k = []
+      fs.writeFile(filename,JSON.stringify(k),function(err){
+        if(err){
+          res.end()
+
+
+        }
+      })
+
+        dict[sid]['cid'].push(userID);
+      }
+    
+    if (!(cid in dict)){
+      let filename = './chat_record/cid_'+userID+'sid_'+add_id+'.txt';
+      k = []
+      fs.writeFile(filename,JSON.stringify(k),function(err){
+        if(err){
+          res.end()
+
+
+        }
+      })
+
+      dict[cid] = {"cid":[],"sid":[userID]};}
+   
+    if (!((contains(dict[cid]['sid'],add_id)))) {
+      let filename = './chat_record/cid_'+userID+'sid_'+add_id+'.txt';
+      k = []
+      fs.writeFile(filename,JSON.stringify(k),function(err){
+        if(err){
+          res.end()
+
+
+        }
+      })
+
+      dict[cid]['sid'].push(add_id);
+      }
+    
+    dict = JSON.stringify(dict);
+    console.log(dict);
+
+
+
+
+
+
+    fs.writeFile('./chat_record/dialogue_relation.txt',dict,function(err){
+            if(err){
+              console.log('err:'+err);
+              res.end();
+            }
+            else{
+              console.log('successfully create a new dialogue in the post');
+            }});
+}});
+  //res.redirect( "localhost:8081/chat2?cid="+cid+"&sid="+sid);
+  res.end()
+
+})
 
 
 module.exports = app;

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>dialogue page</title>
+    <title>customer paage</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <style>
         *{
@@ -211,14 +211,14 @@
 </div>
 <div class="deal-info flex">
     <div class="flex-1" style="text-align: left;">
-        <p class="title">dialogue</p>
+        <p class="title">seller's description...</p>
     </div>
 </div>
 <div class="chat-content" id="chatContent">
 
 </div>
 <div class="inputs flex">
-    <input type="text" id="msgInput" class="flex-1" placeholder="Please input your conversation here">
+    <input type="text" id="msgInput" class="flex-1" placeholder="please input">
     <p class="submit" id="msgSubmit">
         send
     </p>
@@ -246,14 +246,74 @@
             id: query.sid
         }
     }
+    
+        
     window.onload = () => {
+        if(userInfo['service']['id'].length > 10 && userInfo['customer']['id'].length == 10)
+            userInfo['customer']['id'] = query.cid+query.sid.substring(10)
+        console.log(userInfo)
+        
         let serviceName = document.getElementById('serviceName')
         let input = document.getElementById('msgInput')
         let submit = document.getElementById('msgSubmit')
         let socket = io()
+        ajax({
+                   'url':'http://localhost:8081/show/record',
+                   'type':'get',
+                   'data':{'cid':userInfo['customer']['id'],'sid':userInfo['service']['id']},
+                    success:function(data){
+                        console.log("successfully receive the chat record",data)
+                        dialogues = JSON.parse(data)
+                        for(var i = 0; i< dialogues.length;i++){
+                            message = dialogues[i]
+                            let chatContent = document.getElementById('chatContent')
+                            //if(!chatContent){return}
+                            let newMsg = document.createElement('div')
+                            let msgContent = document.createElement('span')
+                            newMsg.append(msgContent)
+                            msgContent.innerText = message[1]
+                            if("cid" == message[0]){
+                                newMsg.classList.add('self-msg')} 
+                            else{newMsg.classList.add('other-msg')}
+                            //console.log('add one record')
+                            chatContent.append(newMsg)
+                            chatContent.scrollTop = chatContent.scrollHeight;
+                            
+                        }}});
         socket.emit('new chat', userInfo)
 
         serviceName.innerText = query.sid
+        if (query.sid.length > 10){
+        var trade = document.createElement('div')
+            trade.innerHTML = '<input type="button" id = "evaluation" onclick="evaluate()" class="form-control" value="finish trade, go to evaluation" size = "8" target = "_blank" method="get"/>'
+            serviceName.append(trade)
+
+
+        //serviceName.append(trade)
+
+        evaluation = document.getElementById('evaluation')
+        evaluation.addEventListener('click', function(){
+            console.log('start to evaluate')
+            console.log(query.sid)
+        var first = confirm("once you go to evaluate, you can't evaluate again, are you sure you have made a deal?")
+        if(first){
+            ajax({
+                'url':'http://localhost:8081/process_evaluation/delete',
+                'type':'get','data':{'instruction':"delete",'id':query.sid,'type':'seller'},success:function(data){
+
+                    if(data == "ok to evaluate")
+                        window.location.href = '../evaluate.html?id='+query.sid
+                    else
+                        window.location.href='../evaluate2.html'
+                    
+                }
+            })}
+        })
+
+
+    }
+        
+        
 
         submit.addEventListener('click', function(){
             if(input.value){
@@ -277,6 +337,44 @@
                 sysMsg: true
             })
         })
+        function ajax(json){
+         if(window.XMLHttpRequest){
+              var ajax = new XMLHttpRequest();
+         }
+         else{
+              var ajax = new ActiveXObject( "Microsoft.XMLHTTP" );
+         }
+    
+         if(json.type=='get'){
+              ajax.open('get',json.url+'?'+JsonToString(json.data),true);
+              ajax.send();
+         }
+         else if(json.type=='post'){
+              ajax.open('post',json.url,true);
+              ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+              ajax.send(JsonToString(json.data));
+         }
+         
+    
+         ajax.onreadystatechange = function(){
+              if(ajax.readyState == 4){
+                   if(ajax.status>=200 && ajax.status<300 || ajax.status == 304){
+                        json.success(ajax.responseText);
+    
+                   }
+                   else{
+                        json.error && json.error();
+                   }
+              };
+         };
+         function JsonToString(json){
+              var arr = [];
+              for(var i in json){
+                   arr.push(i+'='+json[i]);
+              };
+              return arr.join('&');
+         }
+    }
     }
 
     function receiveMsg(data){
