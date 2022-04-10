@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Roommate-CU Par</title>
+    <title>Seller -U Buy</title>
     <link rel="stylesheet" href="fontawesome-5.5/css/all.min.css" />
     <link rel="stylesheet" href="slick/slick.css">
     <link rel="stylesheet" href="slick/slick-theme.css">
@@ -87,18 +87,20 @@
 
      <!--Main Part-->
      <section id="Seller" class="tm-section-pad-top"  style="text-align:center">
-       <div class="container">
+        <!--4 objects-->
+        <div class="container">
           <div class="span6">
-              <nav>
-                  <a href="#First" style="font-size:24px; color:#3496d8">{{this.r_object}}</a> 
-                  <a href="#Second" style="font-size:24px; color:#3496d8">{{this.r_object2}}</a> 
-                  <a href="#Third" style="font-size:24px; color:#3496d8">{{this.r_object3}}</a> 
-                  <a href="#Fourth" style="font-size:24px; color:#3496d8">{{this.r_object4}}</a>
+            <p style="font-size:24px; color:#3496d8">Your objects wait for seller:</p>
+             <nav>
+                  <a style="font-size:20px">{{this.r_object1}} </a> 
+                  <a style="font-size:20px">{{this.r_object2}} </a> 
+                  <a style="font-size:20px">{{this.r_object3}} </a> 
+                  <a style="font-size:20px">{{this.r_object4}} </a>
               </nav>
           </div>
         </div>
         
-        <div class="container" id="First">
+        <div class="container">
             <br>
             <p style="font-size:24px; color:#3496d8">
               Congratulation!
@@ -106,26 +108,43 @@
             <p style="font-size:24px; color:#3496d8">
               We have found your seller! Please check his/her information below.
             </p>
-            <br><br><br>
-             <p style="font-size:24px">SID：{{this.r_sid}}</p>
-            <br>
-            <p style="font-size:24px">Status：{{this.r_status}}</p>
-            <p style="font-size:24px">Object：{{this.r_object}}</p>
-            <p style="font-size:24px">Remark：{{this.r_remark}}</p>
+            <div class="table-responsive">
+              <table class="mx-auto w-auto">
+              <tbody>
+                <tr>
+                  <td>SID：</td>
+                  {{{this.r_sid}}}
+                </tr>
+                <tr>
+                  <td>Status：</td>
+                  {{{this.r_status}}}
+                </tr>
+                <tr>
+                  <td>Object：</td>
+                  {{{this.r_object}}}
+                </tr>
+                <tr>
+                  <td>Remark：</td>
+                  {{{this.r_remark}}}
+                </tr>
+              </tbody>
+            </table>
+            </div>
+            
             <br><br>
             <form action="http://localhost:8081/result_seller" method="Post">
               <p style="font-size:24px; color:#3496d8">Your decision:</p>
               <br><br>
               <p style="font-size:20px; color:#3496d8">Please notice that</p>
-              <p style="font-size:20px; color:#3496d8">If your status is 'Success', then your seller has already accept the result, you can't refuse or cancel it.</p>
+              <p style="font-size:20px; color:#3496d8">If your status is 'Success', then your seller has already accept the result, you can't refuse it.</p>
               <p style="font-size:20px; color:#3496d8">If your status is 'waiting for reply', then your buyer hasn't refuse it yet, you may check the status later.</p>
-              <p style="font-size:20px; color:#3496d8">You may select 'Cancel' when your status is 'waiting for reply', then this object will not be matched any more.</p>
+              <p style="font-size:20px; color:#3496d8">You may select 'Cancel/End', then this object will not be matched any more. If you status is 'Success', please talk to your seller before you select it.</p>
               <p style="font-size:20px; color:#3496d8">So please make your decision seriously.</p>
               <input type="radio" name="result" value="accept" required> Accept
               <br><br>
               <input type="radio" name="result" value="refuse"> Refuse
               <br><br>
-              <input type="radio" name="result" value="end"> Cancel
+              <input type="radio" name="result" value="end"> Cancel/End
               <br><br>
               <input type="submit" class="tm-btn-primary" style="border-color: white" value="Submit"></input>
             </form>
@@ -137,13 +156,19 @@
 
     <!-- Contact -->
     <section id="Contact" class="tm-section-pad-top tm-parallax-2">
-      <footer class="text-center large tm-footer">
+    <footer class="text-center large tm-footer">
           <p class="mb-0">
             Copyright &copy; U Buy 
             - Design: Group C3
           </p>
-      </footer>
+    </footer>
     </section>
+    <script src="js_main/jquery-1.9.1.min.js"></script>     
+    <script src="slick/slick.min.js"></script>
+    <script src="magnific-popup/jquery.magnific-popup.min.js"></script>
+    <script src="js_main/jquery.singlePageNav.min.js"></script>     
+    <script src="js_main/bootstrap.min.js"></script> 
+    <script>
     <script src="js_main/jquery-1.9.1.min.js"></script>     
     <script src="slick/slick.min.js"></script>
     <script src="magnific-popup/jquery.magnific-popup.min.js"></script>
