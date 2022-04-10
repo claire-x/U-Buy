@@ -242,14 +242,14 @@
 </div>
 <div class="deal-info flex">
     <div class="flex-1" style="text-align: left;">
-        <p class="title">description of customer...</p>
+        <p class="title">chat_content</p>
     </div>
 </div>
 <div class="chat-content" id="chatContent">
 
 </div>
 <div class="inputs flex">
-    <input type="text" id="msgInput" class="flex-1" placeholder="please input">
+    <input type="text" id="msgInput" class="flex-1" placeholder="在此输入你的对话">
     <p class="submit" id="msgSubmit">
         send
     </p>
@@ -333,9 +333,9 @@
 
                     if(data == "ok to evaluate")
                         window.location.href = '../evaluate.html?id='+query.cid
-                    if(data == "wait")
-                        window.location.href = '../evaluate3.html'
-                    else
+                    if(data=="wait")
+                        window.location.href='../evaluate3.html'
+                    if(data=="fail")
                         window.location.href='../evaluate2.html'}
             })}
             else{

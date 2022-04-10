@@ -211,7 +211,7 @@
 </div>
 <div class="deal-info flex">
     <div class="flex-1" style="text-align: left;">
-        <p class="title">seller's description...</p>
+        <p class="title">chat content</p>
     </div>
 </div>
 <div class="chat-content" id="chatContent">
@@ -302,16 +302,14 @@
                 'type':'get','data':{'instruction':"delete",'id':query.sid,'type':'seller'},success:function(data){
 
                     if(data == "ok to evaluate")
-                        window.location.href = '../evaluate.html?id='+query.sid
-                    if(data == "wait")
-                        window.location.href = '../evaluate3.html'
-                    else
+                        window.location.href = '../evaluate.html?id='+query.cid
+                    if(data=="wait")
+                        window.location.href='../evaluate3.html'
+                    if(data=="fail")
                         window.location.href='../evaluate2.html'
                     
                 }
             })}
-        else
-            return;
         })
 
 
