@@ -11,7 +11,7 @@ CREATE TABLE `post` (
   `createtime` varchar(25) NOT NULL,
   `status` int(1) NOT NULL DEFAULT '0',
   `category` char(10) DEFAULT 'B', /* B is to find buyer, S is to find seller */
-  `college` char(10) NOT NULL, /* preferred place */
+  `college` char(20) NOT NULL, /* preferred place */
   `object` char(20) NOT NULL,
   `if_matched` tinyint(4) DEFAULT '0',
   `price_min` int(5) NOT NULL,

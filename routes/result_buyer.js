@@ -20,7 +20,7 @@ module.exports=link;
 
 // the main function
 router.post('/', function (req, res) {
-    res.redirect("/index");
+    res.redirect("/account_page");
     let userID = req.cookies.islogin.sid; 
     var pool = new link();
 

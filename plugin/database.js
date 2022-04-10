@@ -16,7 +16,7 @@ function create_pool(){
 
 var pool = new create_pool()
 
-// Select user data by id
+// Select user data by sid
 exports.select_user_data = function(sid, callback){
     let sql = 'SELECT * FROM account WHERE BINARY `sid`="' + sid + '"'
     pool.query(sql, function(err, user_list){

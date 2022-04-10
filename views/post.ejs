@@ -1,7 +1,7 @@
 <% include common/header.ejs %>
   <p><a href="/forum" class="btn btn-primary">
     Back to Forum Homepage
-</a> &nbsp;&nbsp;&nbsp;<a href="/" class="btn btn-primary">
+</a> &nbsp;&nbsp;&nbsp;<a href="/account_page" class="btn btn-primary">
   Back to UBuy Homepage
 </a></p>
   <div class="panel panel-default">
@@ -10,6 +10,7 @@
               <%= data[0].createtime %>
           </div>
           Post: <%=data[0].title %> | finding <font color="red"><%= data[0].category %></font>
+               | <font color="blue">Post tag : <%= data[0].id %></font>
         </div>
        <div class="panel-body">
           <br>

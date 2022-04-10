@@ -20,7 +20,7 @@ module.exports=link;
 
 // the main function
 router.post('/', function (req, res) {
-    res.redirect("/index");
+    res.redirect("/account_page");
     let userID = req.cookies.islogin.sid; 
     var pool = new link();
 
@@ -99,7 +99,7 @@ router.post('/', function (req, res) {
                 { otherID = datas[0].user_id2; num = 1; }
 
                 // matching is successful
-                if(datas[0].res1==1 && num==1)
+                if(datas[0].res2==1 && num==1)
                 { UpRE.select(userID,1); }
                 // waiting for the other one's acceptance
                 else{ SiupRE.select(userID,num,1); }

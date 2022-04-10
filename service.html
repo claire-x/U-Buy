@@ -236,7 +236,7 @@
 <body>
 <div class="user-info flex">
     <p class="flex-1" style="text-align: left;">
-        <span id="userName"></span>
+        <span id="userName"></span><br>
         <i class="icon icon-right-arrow"></i>
     </p>
 </div>
@@ -249,7 +249,7 @@
 
 </div>
 <div class="inputs flex">
-    <input type="text" id="msgInput" class="flex-1" placeholder="在此输入你的对话">
+    <input type="text" id="msgInput" class="flex-1" placeholder="please input">
     <p class="submit" id="msgSubmit">
         send
     </p>
@@ -318,7 +318,7 @@
         userName.innerText = query.cid
         if (query.cid.length > 10){
         var trade = document.createElement('div')
-            trade.innerHTML = '<input type="button" id = "evaluation" onclick="evaluate()" class="form-control" value="finish trade, go to evaluation" size = "8" target = "_blank" method="get"/>'
+            trade.innerHTML = '<br><input type="button" id = "evaluation" onclick="evaluate()" class="form-control" value="finish trade, go to evaluation" size = "8" target = "_blank" method="get"/>'
             userName.append(trade)
 
             evaluation = document.getElementById('evaluation')

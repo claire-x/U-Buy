@@ -94,7 +94,7 @@ router.post('/', function (req, res) {
               {   
                   option[i]={'id':result[i].id,'user_id1':result[i].user_id1,'user_id2':result[i].user_id2, 
                   'object':result[i].object, 'pid2':result[i].pid2, 'remark1':result[i].remark1,
-                  'result':result[i].result};
+                      'result': result[i].result, 'pid1': result[i].pid1};
               }
           }
           // If return directly, it will return undefined. So we need call back function to receive the data.
@@ -119,7 +119,7 @@ router.post('/', function (req, res) {
   function CheckRE(){
     this.select=function(callback,id,pid){
         var postId = pid;
-      var sql = 'SELECT * FROM match_result where user_id2 = ' + id + "AND pid2 = ?";
+      var sql = 'SELECT * FROM match_result where user_id2 = ' + id + " AND pid2 = ?";
       var option = {};  
       pool.query(sql,[postId],function(err,result){
         if(err){console.log(err);}
@@ -266,7 +266,7 @@ router.post('/', function (req, res) {
                           l_sid = l_sid + "<td id ='sid" + i + "'>NA</td>"; 
                           l_remark = l_remark + "<td id ='remark" + i + "'>NA</td>";
                           l_status = l_status + "<td id ='status" + i + "'>not match yet</td>";
-                          res.render('NoSeller.hbs',{
+                          res.render('NoBuyer.hbs',{
                             r_object1: AllObject[0],
                             r_object2: AllObject[1],
                             r_object3: AllObject[2],
@@ -282,7 +282,7 @@ router.post('/', function (req, res) {
                           l_sid = l_sid + "<td id ='sid" + i + "'>" + choice.sid + "</td>"; 
                           l_remark = l_remark + "<td id ='remark" + i + "'>" + choice.remark + "</td>";
                           l_status = l_status + "<td id ='status" + i + "'>waiting for reply</td>";
-                          res.render('YesSeller.hbs',{
+                          res.render('YesBuyer.hbs',{
                             layout: null,
                             r_object: l_object,
                             r_sid: l_sid,
@@ -327,9 +327,12 @@ router.post('/', function (req, res) {
                     ChRE.select(function(rdata){
                         dataR = rdata;
                         // console.log("matching already successful");
+                        console.log("user id 2 & 1 " + datasC[0].pid2 +" " +datasC[0].user_id1 +" postid "+ datasC[0].pid1);
                         l_object = l_object + "<td id ='obj" + i + "'>" + datasC[0].object, + "</td>";
                         l_sid = l_sid + "<td id ='sid" + i + "'>" + datasC[0].user_id1 + "</td>"; 
-                        l_remark = l_remark + "<td id ='remark" + i + "'>" + datasC[0].remark1 + "</td>";
+                        l_remark = l_remark + "<td id ='remark" + i + "'>" + datasC[0].remark1 + "</td><br>" +
+                            "<div class='form - group'><input id = 'new_chat'  type='button' value='go to chat' class = 'chat' onclick='gotochat()' values =" +
+                            datasC[0].user_id1 + " uid =" + datasC[0].pid1 + "> </div><br>";
                         l_status = l_status + "<td id ='status" + i + "'>" + reply + "</td>";
                         res.render('YesBuyer.hbs',{
                           layout: null,
@@ -373,7 +376,7 @@ router.post('/', function (req, res) {
                       l_sid = l_sid + "<td id ='sid" + i + "'>" + '' + "</td>"; 
                       l_remark = l_remark + "<td id ='remark" + i + "'>" + '' + "</td>";
                       l_status = l_status + "<td id ='status" + i + "'>not match yet</td>";
-                      res.render('NoSeller.hbs',{
+                      res.render('NoBuyer.hbs',{
                         r_object1: AllObject[0],
                         r_object2: AllObject[1],
                         r_object3: AllObject[2],

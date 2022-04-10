@@ -95,36 +95,6 @@ app.use('/admin_reset', admin_reset);
 app.use('/user_profile', user_profile);
 
 
-
-/**
-* ----------------------------------------------
-*/
-
-
-app.get('/Buyer', urlencodedParser, function (req, res) {
-  if( !req.session.passport ){ res.redirect('/login'); }
-  let user_name = req.cookies.islogin.name;
-  res.render('Buyer.hbs', {
-    layout: null,
-    username: user_name,
-    login: 1
-  });
-});
-
-app.get('/Seller', urlencodedParser, function (req, res) {
-  
-  if( !req.session.passport ){ res.redirect('/login'); }
-  let user_name = req.cookies.islogin.name;
-  res.render('Seller.hbs', {
-    layout: null,
-    username: user_name,
-    login: 1
-  });
-});
-
-
-
-
 app.post('/evaluate', function (req, res) {
   if( !req.session.passport ){ res.redirect('/login'); }
   res.redirect('evaluate.html');

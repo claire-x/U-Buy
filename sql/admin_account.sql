@@ -11,4 +11,4 @@ CREATE TABLE `admin_account` (
   PRIMARY KEY (`id`)
 );
 
-INSERT INTO `admin_account` VALUES (1,123456,'Administrator','e10adc3949ba59abbe56e057f20f883e');
+INSERT INTO `admin_account` VALUES (1,555555,'Administrator','e10adc3949ba59abbe56e057f20f883e');

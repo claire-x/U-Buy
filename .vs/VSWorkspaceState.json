@@ -1,14 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\config",
-    "\\controllers",
-    "\\middleware",
-    "\\models",
-    "\\plugin",
-    "\\routes",
     "\\sql",
     "\\views"
   ],
+  "SelectedNode": "\\sql\\account.sql",
   "PreviewInSolutionExplorer": false
 }

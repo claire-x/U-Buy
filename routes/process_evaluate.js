@@ -24,7 +24,8 @@ router.get('/', function (req, res) {
 console.log('start to modify evaluation system');
 var json = urlLib.parse(req.url,true).query;
 var pool = new link();
-sid = json['SID'];
+    sid = json['SID'];
+    console.log("The sid of the evaluated: "+sid);
 score = json['score'];
 console.log('extract post database',sid)
 let sql = 'SELECT * FROM account WHERE BINARY `sid`="' + sid + '"'

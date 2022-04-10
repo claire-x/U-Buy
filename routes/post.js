@@ -3,7 +3,6 @@ var express = require('express');
 var router = express.Router();
 var async = require('async');
 var postProcess = require('../plugin/forumdb');
-const fs = require("fs");
 
 // show each post and its comments
 router.get('/:postid.html', function(req, res) {
@@ -87,6 +86,20 @@ router.get('/delete', function (req, res) {
 				res.send({ code: 0 });
 			}
 		});
+
+		postProcess.delete_match_result_1(postid, function (result) {
+			if (result.affectedRows) {
+				console.log("delete, pid1");
+			}
+		});
+
+
+		postProcess.delete_match_result_2(postid, function (result) {
+			if (result.affectedRows) {
+				console.log("delete, pid2");
+			}
+		});
+
 	}
 });
 
@@ -140,7 +153,6 @@ router.get('/newpost', function(req, res){
 		postProcess.addPost(params, function(result){
 			// send the operation outcome to frontend
             if(result.affectedRows){
-				console.log(result.insertId);
 				let postID = { id: result.insertId };
 				res.cookie('postID', postID, { maxAge: 2 * 3600 * 1000 });
                 res.send({code:0,data:{url:'/post/'+result.insertId+'.html', title:title, author:user_name, createtime:createtime}});

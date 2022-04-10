@@ -71,6 +71,35 @@ var dbprocess = {
         });
     },
 
+
+    delete_match_result_1: function (postid, callback) {
+        pool.getConnection(function (err, connection) {
+            if (err) throw err;
+            let strSql = 'Delete from `match_result` WHERE `pid1` = ' + postid;
+            connection.query(strSql, function (err, result) {
+                connection.release();
+                if (err) {
+                    console.error(err);
+                }
+                callback(result);
+            })
+        });
+    },
+
+    delete_match_result_2: function (postid, callback) {
+        pool.getConnection(function (err, connection) {
+            if (err) throw err;
+            let strSql = 'Delete from `match_result` WHERE `pid2` = ' + postid;
+            connection.query(strSql, function (err, result) {
+                connection.release();
+                if (err) {
+                    console.error(err);
+                }
+                callback(result);
+            })
+        });
+    },
+
     // change the status of post in database to private using "update"
     setPrivate:function(postid,params,callback){
         pool.getConnection(function(err,connection){

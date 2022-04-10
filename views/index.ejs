@@ -1,5 +1,5 @@
 <% include common/header.ejs %>
-<p><a href="/" class="btn btn-primary">
+<p><a href="/account_page" class="btn btn-primary">
 Back to Homepage
 </a> &nbsp;&nbsp;&nbsp;<a href="/forum/mypost" class="btn btn-primary">
   View my posts
@@ -15,11 +15,14 @@ Back to Homepage
                   <%= data[i].createtime %>
               </div>
               <a href="/post/<%=data[i].id %>.html" ><%=data[i].title %></a> | <%= data[i].object %> finding <font color="red"><%= data[i].category %></font>
+               | <font color="blue">Post tag : <%= data[i].id %></font>
             </div>
            <div class="panel-body">
               Author:<%= data[i].name %>
+              <% if(data[i].name != user.name) {%>
+           <div class="form-group"><br><input id = "new_chat"  type="button" value="go to chat" class = "chat" onclick="gotochat()" values = <%=data[i].SID %> uid = <%=data[i].id%> ></div>
+           <% } %>
            </div>
-           <div class="form-group"><input id = "new_chat"  type="button" value="go to chat" class = "chat" onclick="gotochat()" values = <%=data[i].SID %> uid = <%=data[i].id%> ></div>
        </div>
       <% } %>
     </div>

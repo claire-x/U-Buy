@@ -66,178 +66,173 @@
 	</style>
 </head>
 <body>
-     <!-- HOME -->
-     <section id="home"  style="background-color: dodgerblue;">
-      <div class="overlay"></div>
-          <div class="container">
-               <div class="row">
+    <!-- HOME -->
+    <section id="home" style="background-color: dodgerblue;">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="home-info">
+                        <h1 id="a_title" name="thetitle">Thanks for using U Buy! <br>You can evaluate a seller/buyer here.</h1>
+                        <h1></h1>
 
-                    <div class="col-md-12 col-sm-12">
-                         <div class="home-info">
-                              <h1 id="a_title" name="thetitle">Thanks for using U Buy! <br>You can evaluate a seller here.</h1>
-                              <h1></h1>
-                              
-                              <div class="subscribe-form">
-                                <form name="register"  id="sub">
-                                  
-						          
-						          <p style="font-size:24px; color:#FFFFFF">please remember to mark seller/buyer</p><br>
-                                  
-                                        <p required="" id="sid" maxlength="10", minlength="10">PLEASE MARK</p>
-                                  <br>
-                                  <br> 
-                                  
-                                 
-                                  <br>
-                                  
-								   
-								      <input class="star" value=5 id="star-5"  onclick = "scores()" type="radio" name="star"/>
-								      <label class="star" for="star-5"></label>
-								      <input class="star" value=4 id="star-4" type="radio" onclick = "scores()"  name="star"/>
-								      <label class="star" for="star-4"></label>
-								      <input class="star" value=3 id="star-3" type="radio" onclick = "scores()"  name="star"/>
-								      <label class="star" for="star-3"></label>
-								      <input class="star" value=2 id="star-2" type="radio" onclick = "scores()"  name="star"/>
-								      <label class="star" for="star-2"></label>
-								      <input class="star" value=1 id="star-1" type="radio" onclick = "scores()"  name="star"/>
-								      <label class="star" for="star-1"></label>
-								  
-								  </div>
-                  <br><br>
-                  <br><br><br>
-                                  <input type = "button" value="submit" class="form-control" onclick = "submission()" id="bt" style="background-color:lightsteelblue;" />
+                        <div class="subscribe-form">
+                            <form name="register" id="sub">
 
-                                </form>
-                              </div>    
-                         </div>
+                                <p style="font-size:24px; color:#FFFFFF">Click to evaluate (score: 0-5)</p><br>
+
+                                <div class="stars form-control">
+                                    
+                                  <input type="text" class="text" name="comment"  id="comment">
+                                    <br><br>
+                                    <input class="star" value=5 id="star-5" onclick="scores()" type="radio" name="star" />
+                                    <label class="star" for="star-5"></label>
+                                    <input class="star" value=4 id="star-4" type="radio" onclick="scores()" name="star" />
+                                    <label class="star" for="star-4"></label>
+                                    <input class="star" value=3 id="star-3" type="radio" onclick="scores()" name="star" />
+                                    <label class="star" for="star-3"></label>
+                                    <input class="star" value=2 id="star-2" type="radio" onclick="scores()" name="star" />
+                                    <label class="star" for="star-2"></label>
+                                    <input class="star" value=1 id="star-1" type="radio" onclick="scores()" name="star" />
+                                    <label class="star" for="star-1"></label>
+                                 </div>
+                                    <br><br>
+                                    <br><br><br>
+                                    <input type="button" value="submit" class="form-control" onclick="submission()" id="bt" style="background-color:lightsteelblue;" />
+
+                            </form>
+                        </div>
                     </div>
-               </div>
-          </div>
-     </section>
+                </div>
+            </div>
+        </div>
+    </section>
 
-     <!-- SCRIPTS -->
-     <script src="js/jquery.js"></script>
-     <script src="js/bootstrap.min.js"></script>
-     <script src="js/vegas.min.js"></script>
-     <script src="js/countdown.js"></script>
-     <script src="js/init.js"></script>
-     <script src="js/custom.js"></script>
-     <script src="ajax.js"></script>
-     <script src="./js/entering.js"></script>
-     <script>
-     	init();
-     	var score = 0
-
-
-     	 function scores(e){
+    <!-- SCRIPTS -->
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/vegas.min.js"></script>
+    <script src="js/countdown.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="ajax.js"></script>
+    <script src="./js/entering.js"></script>
+    <script>
+        init();
+        var score = 0
 
 
-     		var ev = e || event;
-     		var iTarget = ev.srcElement || ev.target;
-     		if(iTarget.id == "star-5")
-     			score = 5
-     		if(iTarget.id == "star-4")
-     			score = 4
-     		if(iTarget.id =="star-3")
-     			score = 3
-     		if(iTarget.id =="star-2")
-     			score = 2
-     		if(iTarget.id=="star-1")
-     			score=1
-     	}
-     	
-     	function submission() {
-     		//sid = document.getElementById('sid').value
-               var currentPath = window.document.location.href;
-               sid = currentPath.split('=')[1].substring(0,10)
-               console.log(sid)
-              
-     		var second = confirm("remeber: once you submit evaluation, you can not modify it again")
-               console.log(second)
-
-     		if(second){
-     		console.log('send evaluation',sid,score)
-     		ajax({
-                   'url':'./process_evaluation',
-                   'type':'get',
-                   'data':{'SID':sid,'score':score},
-                   success:function(data){
-                   	console.log('hh')
-                   	window.location.href = 'http://localhost:8081/'
-                   }});}
-               else{
-                    return;
-               }
-     
-
-     	}
+        function scores(e) {
 
 
-     	function init() {
-     		// body...
-     		document.getElementById("report").style.display = 'block';
+            var ev = e || event;
+            var iTarget = ev.srcElement || ev.target;
+            if (iTarget.id == "star-5")
+                score = 5
+            if (iTarget.id == "star-4")
+                score = 4
+            if (iTarget.id == "star-3")
+                score = 3
+            if (iTarget.id == "star-2")
+                score = 2
+            if (iTarget.id == "star-1")
+                score = 1
+        }
 
-     		document.getElementById("freerider").style.display = 'block';
-     		change("report");
-     		change("freerider");
-     	}
+        function submission() {
+            //sid = document.getElementById('sid').value
+            var currentPath = window.document.location.href;
+            sid = currentPath.split('=')[1].substring(0, 10)
+            console.log(sid)
 
-     	function change(name) {
-     		var e = document.getElementById(name);
-   			if(e.style.display == 'block')
-      			e.style.display = 'none';
-   			else
-      			e.style.display = 'block';
-		}
+            var second = confirm("remeber: once you submit evaluation, you can not modify it again")
+            console.log(second)
 
-		function update() {
-			// body...
-			if (document.getElementById("choice").value == "TM") {
-				document.getElementById("report").style.display = 'initial';
-				document.getElementById("freerider").style.display = 'initial';
-			} else {
-				init();
-			}
-		}
-		 function ajax(json){
-         if(window.XMLHttpRequest){
-              var ajax = new XMLHttpRequest();
-         }
-         else{
-              var ajax = new ActiveXObject( "Microsoft.XMLHTTP" );
-         }
-    
-         if(json.type=='get'){
-              ajax.open('get',json.url+'?'+JsonToString(json.data),true);
-              ajax.send();
-         }
-         else if(json.type=='post'){
-              ajax.open('post',json.url,true);
-              ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-              ajax.send(JsonToString(json.data));
-         }
-         
-    
-         ajax.onreadystatechange = function(){
-              if(ajax.readyState == 4){
-                   if(ajax.status>=200 && ajax.status<300 || ajax.status == 304){
+            if (second) {
+                console.log('send evaluation', sid, score)
+                ajax({
+                    'url': './process_evaluation',
+                    'type': 'get',
+                    'data': { 'SID': sid, 'score': score },
+                    success: function (data) {
+                        console.log('hh')
+                        window.location.href = 'http://localhost:8081/'
+                    }
+                });
+            }
+            else {
+                return;
+            }
+
+
+        }
+
+
+        function init() {
+            // body...
+            document.getElementById("report").style.display = 'block';
+
+            document.getElementById("freerider").style.display = 'block';
+            change("report");
+            change("freerider");
+        }
+
+        function change(name) {
+            var e = document.getElementById(name);
+            if (e.style.display == 'block')
+                e.style.display = 'none';
+            else
+                e.style.display = 'block';
+        }
+
+        function update() {
+            // body...
+            if (document.getElementById("choice").value == "TM") {
+                document.getElementById("report").style.display = 'initial';
+                document.getElementById("freerider").style.display = 'initial';
+            } else {
+                init();
+            }
+        }
+        function ajax(json) {
+            if (window.XMLHttpRequest) {
+                var ajax = new XMLHttpRequest();
+            }
+            else {
+                var ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            if (json.type == 'get') {
+                ajax.open('get', json.url + '?' + JsonToString(json.data), true);
+                ajax.send();
+            }
+            else if (json.type == 'post') {
+                ajax.open('post', json.url, true);
+                ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                ajax.send(JsonToString(json.data));
+            }
+
+
+            ajax.onreadystatechange = function () {
+                if (ajax.readyState == 4) {
+                    if (ajax.status >= 200 && ajax.status < 300 || ajax.status == 304) {
                         json.success(ajax.responseText);
-    
-                   }
-                   else{
+
+                    }
+                    else {
                         json.error && json.error();
-                   }
-              };
-         };
-         function JsonToString(json){
-              var arr = [];
-              for(var i in json){
-                   arr.push(i+'='+json[i]);
-              };
-              return arr.join('&');
-         }
-    }
-     </script>
+                    }
+                };
+            };
+            function JsonToString(json) {
+                var arr = [];
+                for (var i in json) {
+                    arr.push(i + '=' + json[i]);
+                };
+                return arr.join('&');
+            }
+        }
+    </script>
 
 </body>
 </html>

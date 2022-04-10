@@ -119,7 +119,7 @@ router.post('/', function (req, res) {
   function CheckRE(){
     this.select=function(callback,id,pid){
         var postId = pid;
-      var sql = 'SELECT * FROM match_result where user_id1 = ' + id + "AND pid1 = ?";
+      var sql = 'SELECT * FROM match_result where user_id1 = ' + id + " AND pid1 = ?";
       var option = {};  
       pool.query(sql,[postId],function(err,result){
         if(err){console.log(err);}

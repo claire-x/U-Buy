@@ -29,15 +29,14 @@ router.post( '/', urlencodedParser, function(req, res){
     }
 
     // procedure of login
-    password = md5(password);   // encrypt the password
-    // User.selectUserInfo( sid, function( results ){ 
+    password = md5(password); 
     DB.verify_user_identity(sid, password, function(results){
-        if( results.length > 0 ){   // find the user out
-            if(results[0].state == 1){  // the user is active
+        if( results.length > 0 ){ 
+            if(results[0].state == 1){
                 // set passport as the authentication to access the website
                 let passport = { id : results[0].id, name: results[0].name, sid: sid};
                 res.cookie('islogin', passport, { maxAge: 2 * 3600 * 1000});
-                res.redirect('/');
+                res.redirect('/account_page');
             }
             else{
                 res.render('acct_login.hbs', {
@@ -74,7 +73,6 @@ router.get('/reset', function(req, res){
 router.post('/reset', urlencodedParser, function(req, res){
     let sid = req.body.sid;
     let code = req.body.code;
-    // User.selectUserInfo(sid, function(result){
     DB.select_user_data(sid, function(result){
         if( result.length === 0 ){ // have not registed yet
             res.render('acct_reset_email.hbs', {
@@ -129,7 +127,6 @@ router.post( '/reset/email', urlencodedParser, function(req, res){
                         return res.send('000'); // unsuccessfully
                     }
 
-                    // User.updateCode(sid, code, function(err){
                     let data_set = {code:code};
                     DB.update_user(sid, data_set, callback=function(err){
                         if(err){
@@ -190,7 +187,7 @@ router.post('/reset/pwd', function(req, res){
         });
     }
 
-    password = md5(password); // encrypt the password
+    password = md5(password);
     // find the user
     DB.select_user_data(sid, function(result){
         if(result.length === 0 ){
