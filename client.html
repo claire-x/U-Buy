@@ -303,11 +303,15 @@
 
                     if(data == "ok to evaluate")
                         window.location.href = '../evaluate.html?id='+query.sid
+                    if(data == "wait")
+                        window.location.href = '../evaluate3.html'
                     else
                         window.location.href='../evaluate2.html'
                     
                 }
             })}
+        else
+            return;
         })
 
 
