@@ -282,6 +282,20 @@ router.post('/', function (req, res) {
                           l_sid = l_sid + "<td id ='sid" + i + "'>" + choice.sid + "</td>"; 
                           l_remark = l_remark + "<td id ='remark" + i + "'>" + choice.remark + "</td>";
                           l_status = l_status + "<td id ='status" + i + "'>waiting for reply</td>";
+
+                          var yourDecision = 
+              '<form action="http://localhost:8081/result_buyer" method="Post">'+
+                 ' <p style="font-size:24px; color:#3496d8">Your decision:</p>'+
+                  '<br><br>'+
+                  '<input type="radio" name="result" value="accept" required> Accept'+
+                  '<br><br>'+
+                  '<input type="radio" name="result" value="refuse"> Refuse'+
+                  '<br><br>' +
+                  '<input type="radio" name="result" value="end"> Cancel/End'+
+                  '<br><br>'
+                  '<input type="submit" class="tm-btn-primary" style="border-color: white" value="Submit"></input>'+
+              '</form>';
+
                           res.render('YesBuyer.hbs',{
                             layout: null,
                             r_object: l_object,
@@ -292,6 +306,7 @@ router.post('/', function (req, res) {
                             r_object2: AllObject[1],
                             r_object3: AllObject[2],
                             r_object4: AllObject[3],
+                            yourDecision: yourDecision,
                             username: req.cookies.islogin.name,
                             login: 1
                         });
@@ -356,7 +371,22 @@ router.post('/', function (req, res) {
                         l_object = l_object + "<td id ='obj" + i + "'>" + datasC[0].object, + "</td>";
                         l_sid = l_sid + "<td id ='sid" + i + "'>" + datasC[0].user_id1 + "</td>"; 
                         l_remark = l_remark + "<td id ='remark" + i + "'>" + datasC[0].remark1 + "</td>";
-                        l_status = l_status + "<td id ='status" + i + "'>" + reply + "</td>";
+                      l_status = l_status + "<td id ='status" + i + "'>" + reply + "</td>";
+
+                      var yourDecision =
+                          '<form action="http://localhost:8081/result_buyer" method="Post">' +
+                          ' <p style="font-size:24px; color:#3496d8">Your decision:</p>' +
+                          '<br><br>' +
+
+                          '<input type="radio" name="result" value="accept" required> Accept' +
+                          '<br><br>' +
+                          '<input type="radio" name="result" value="refuse"> Refuse' +
+                          '<br><br>' +
+                          '<input type="radio" name="result" value="end"> Cancel/End' +
+                          '<br><br>'
+                      '<input type="submit" class="tm-btn-primary" style="border-color: white" value="Submit"></input>' +
+                          '</form>';
+
                         res.render('YesBuyer.hbs',{
                           layout: null,
                           r_object: l_object,
@@ -367,7 +397,8 @@ router.post('/', function (req, res) {
                           r_object2: AllObject[1],
                           r_object3: AllObject[2],
                           r_object4: AllObject[3],
-                          username: req.cookies.islogin.name,
+                            username: req.cookies.islogin.name,
+                            yourDecision: yourDecision,
                           login: 1
                       });
                     }
