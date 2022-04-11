@@ -344,6 +344,8 @@ router.post('/', function (req, res) {
                         l_sid = l_sid + "<td id ='sid" + i + "'>" + datasC[0].user_id2 + "</td>"; 
                         l_remark = l_remark + "<td id ='remark" + i + "'>" + datasC[0].remark2 + "</td>";
                         l_status = l_status + "<td id ='status" + i + "'>" + reply + "</td>";
+                        var instruct = 'See if the SELLER has initiated a Trading Chat, <br>'+
+                'if not, contact and ask him/her for it use the info. below.'
                         res.render('YesSeller.hbs',{
                           layout: null,
                           r_object: l_object,
@@ -354,7 +356,8 @@ router.post('/', function (req, res) {
                           r_object1: AllObject[0],
                           r_object2: AllObject[1],
                           r_object3: AllObject[2],
-                          r_object4: AllObject[3],
+                            r_object4: AllObject[3],
+                            instruct: instruct,
                           username: req.cookies.islogin.name,
                           login: 1
                       });

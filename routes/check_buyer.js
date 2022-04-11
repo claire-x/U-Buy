@@ -347,6 +347,9 @@ router.post('/', function (req, res) {
                             "<div class='form - group'><input id = 'new_chat'  type='button' value='go to chat' class = 'chat' onclick='gotochat()' values =" +
                             datasC[0].user_id1 + " uid =" + datasC[0].pid1 + "> </div><br>";
                         l_status = l_status + "<td id ='status" + i + "'>" + reply + "</td>";
+
+                        var instruct = 'Please click below and initiate a <b>Trading Chat</b>.';
+
                         res.render('YesBuyer.hbs',{
                           layout: null,
                           r_object: l_object,
@@ -357,7 +360,8 @@ router.post('/', function (req, res) {
                           r_object1: AllObject[0],
                           r_object2: AllObject[1],
                           r_object3: AllObject[2],
-                          r_object4: AllObject[3],
+                            r_object4: AllObject[3],
+                            instruct: instruct,
                           username: req.cookies.islogin.name,
                           login: 1
                       });
