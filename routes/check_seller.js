@@ -34,7 +34,7 @@ router.post('/', function (req, res) {
   function SearchID() {
     // function to search the info with given SID for this user as a seller
     this.select=function(callback,id){
-      var sql = 'SELECT distinct * FROM post where user_sid = ' + id + ' AND category = "Seller"';
+      var sql = 'SELECT distinct * FROM post where user_sid = ' + id + ' AND category = "Seller" And if_matched != 1';
       var option = {};
       pool.query(sql,function(err,result){
         if(err){console.log(err);}
@@ -58,7 +58,7 @@ router.post('/', function (req, res) {
     // function to filter the data with the given info, including info like object's name, category (to dind seller or to find buyer), accepted price range, preferred transaction place (college)
     this.select=function(callback1,datas){
       // Besides the same info, it also needed to be assured that it's buyer/seller matched, and not the same person
-      var sql1 = 'SELECT * FROM post where category !=? AND college = ? AND user_sid != ? And object = ? And if_matched != 1';
+      var sql1 = 'SELECT * FROM post where category !=? AND college IN (?, "No preference") AND user_sid != ? And object = ? And if_matched != 1';
       var Params = [datas.category,datas.college,datas.sid,datas.object];
       var option1 = {};
       pool.query(sql1,Params,function(err,results){
@@ -83,17 +83,17 @@ router.post('/', function (req, res) {
 
   // check if the user is matched and succeed or the matching hasn't been done with given sid and pid
   function CheckID(){
-    this.select=function(callback,id,pid){
-      var sql = 'SELECT * FROM match_result where user_id1 = ' + id  +' AND result != 0 AND pid1 = ' + pid;
+    this.select=function(callback,id){
+      var sql = 'SELECT * FROM match_result where user_id1 = ' + id  +' AND result != 0';
       var option = {};  
       pool.query(sql,function(err,result){
           if(err){console.log(err);}
-          option[0]={'user_id1':"00000",'user_id2':null,'result':null,'pid1':0};
+          option[0]={'user_id1':"00000",'user_id2':null,'result':0,'pid1':0};
           if(result){
               for(var i = 0; i < result.length; i++)
               {   
                   option[i]={'id':result[i].id,'user_id1':result[i].user_id1,'user_id2':result[i].user_id2, 
-                  'object':result[i].object, 'pid1':result[i].pid1, 'remark2':result[i].remark2,
+                  'object':result[i].object, 'pid1': result[i].pid1, 'pid2':result[i].pid2, 'remark2':result[i].remark2,
                   'result':result[i].result};
               }
           }
@@ -117,18 +117,17 @@ router.post('/', function (req, res) {
 
   // check if the user was matched before with given sid and pid
   function CheckRE(){
-    this.select=function(callback,id,pid){
-        var postId = pid;
-      var sql = 'SELECT * FROM match_result where user_id1 = ' + id + " AND pid1 = ?";
+    this.select=function(callback,id){
+      var sql = 'SELECT * FROM match_result where user_id1 = ' + id;
       var option = {};  
-      pool.query(sql,[postId],function(err,result){
+      pool.query(sql,function(err,result){
         if(err){console.log(err);}
         option[0]={'user_id1':"00000",'pid1':0};
         if(result){
             for(var i = 0; i < result.length; i++)
             {
                 option[i]={'id':result[i].id,'res1':result[i].res1,'res2':result[i].res2,
-                'user_id1':result[i].user_id1,'user_id2':result[i].user_id2, 'pid1':result[i].pid1,
+                'user_id1':result[i].user_id1,'user_id2':result[i].user_id2, 'pid1': result[i].pid1, 'pid2':result[i].pid2,
                 'object':result[i].object};
             }
         }
@@ -141,18 +140,17 @@ router.post('/', function (req, res) {
 
   // check if the user was matched but failed with given sid and pid
   function ReCheckID(){
-    this.select=function(callback,id,pid){
-        var postId = pid;
-        var sql = 'SELECT * FROM match_result where user_id1 = ' + id + ' AND result = 0 AND pid1 =?';
+    this.select=function(callback,id){
+        var sql = 'SELECT * FROM match_result where user_id1 = ' + id + ' AND result = 0';
         var option = {};  
-        pool.query(sql,[postId],function(err,result){
+        pool.query(sql,function(err,result){
             if(err){console.log(err);}
             option[0]={'user_id1':"00000",'pid1':0};
             if(result){
                 for(var i = 0; i < result.length; i++)
                 {
                     option[i]={'id':result[i].id,'res1':result[i].res1,'res2':result[i].res2,
-                    'user_id1':result[i].user_id1,'user_id2':result[i].user_id2, 'pid1':result[i].pid1,
+                    'user_id1':result[i].user_id1,'user_id2':result[i].user_id2, 'pid1': result[i].pid1, 'pid2':result[i].pid2,
                     'object':result[i].object};
                 }
             }
@@ -205,7 +203,7 @@ router.post('/', function (req, res) {
             ChID.select(function (rdataC){
               datasC = rdataC;
               // no result in 'match_result'
-              if(datasC[0].pid1 == 0) {
+              if((datasC[0].result == 0)||(datasC[0].result == '-1')) {
                 console.log(datasC[0].user_id1);
                 // make sure the failed matching won't occur again
                 RChID.select(function(rdataR){
@@ -318,14 +316,14 @@ router.post('/', function (req, res) {
                       
                     },datas[0]);
                   
-                },userID,AllPid[i]);
+                },userID);
               }
     
               // there is already a matching result
               else {
                 // get the other one's SID
                 var otherID;
-                if((datasC[0].user_id1==userID)&&(datasC[0].pid1==AllPid[i])) {
+                if((datasC[0].user_id1==userID)) {
                   otherID = datasC[0].user_id2;
                 }
     
@@ -352,6 +350,7 @@ router.post('/', function (req, res) {
                           r_sid: l_sid,
                           r_remark: l_remark,
                           r_status: l_status,
+                          chatId: "<td>Chatroom：</td>" + "<td id ='chatId" + i + "'>" + datasC[0].user_id2 + "tag_" + datasC[0].pid1 + "</td>",
                           r_object1: AllObject[0],
                           r_object2: AllObject[1],
                           r_object3: AllObject[2],
@@ -416,7 +415,7 @@ router.post('/', function (req, res) {
     
                 },otherID);
               }
-            },userID,AllPid[i])
+            },userID)
           // }
 
         }
