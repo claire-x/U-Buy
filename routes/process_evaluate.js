@@ -1,4 +1,4 @@
-333
+
 var express = require('express');
 let router = express.Router();
 var mysql  = require('mysql'); 
@@ -94,11 +94,14 @@ router.get('/delete',function(req,res){
                         res.write("wait")
                         value = 3
                 }
-                else if(result[0].negotiation_prase == 3 && type =='buyer'){
-                        res.write('ok to evaluate')
-                        formdb = require('../plugin/forumdb')
-                        formdb.modify_post(uid);
-                        value = 4
+                else if (result[0].negotiation_prase == 3 && type == 'buyer') {
+                    res.write('ok to evaluate')
+                    formdb = require('../plugin/forumdb')
+                    formdb.modify_post(uid);
+                    formdb.delete_match_result_1(uid);
+                    formdb.delete_match_result_2(uid);
+
+                    value = 4
                 }
                 else if(result[0].negotiation_prase ==2 && type == 'buyer'){
                          console.log("keep to wait for other to evaluate")
@@ -115,11 +118,14 @@ router.get('/delete',function(req,res){
                         res.write("wait")
                         value = 5
                 }
-                else if(result[0].negotiation_prase == 5 && type =='seller'){
-                        res.write('ok to evaluate')
-                        formdb = require('../plugin/forumdb')
-                        formdb.modify_post(uid);
-                        value = 4
+                else if (result[0].negotiation_prase == 5 && type == 'seller') {
+                    res.write('ok to evaluate')
+                    formdb = require('../plugin/forumdb')
+                    formdb.modify_post(uid);
+                    formdb.delete_match_result_1(uid);
+                    formdb.delete_match_result_2(uid);
+
+                    value = 4
                 }
                 else if (result[0].negotiation_prase ==1 && type == 'seller'){
                          console.log("keep to wait for other to evaluate")

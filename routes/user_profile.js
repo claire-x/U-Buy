@@ -42,6 +42,10 @@ router.post('/', urlencodedParser, function (req, res) {
         } else {
             let name = result[0].name;
             let id = result[0].id;
+            let times = result[0].judgement_times;
+            let total = result[0].total_scores;
+            let score = total / times;
+            score = score.toFixed(2);
 
             DB.select_all_user(function (result) {
                 var myoption = "";
@@ -55,6 +59,7 @@ router.post('/', urlencodedParser, function (req, res) {
                     id: id,
                     name: name,
                     sid: sid,
+                    score: score,
                     email: sid + "@link.cuhk.edu.hk",
                     myoption: myoption,
                     login: 1

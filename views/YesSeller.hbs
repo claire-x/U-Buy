@@ -102,46 +102,48 @@
         
         <div class="container">
             <br>
+            <p style="font-size:24px; color:#c34646">
+                Congratulation!
+                A seller was found!
             <p style="font-size:24px; color:#3496d8">
-              Congratulation!
-            </p>
+                See if the <b>SELLER</b> initiates a<b> Trading Chat</b>,</p>
             <p style="font-size:24px; color:#3496d8">
-              We have found your seller! Please check his/her information below.
+                if not, contact and ask him/her for it use the info. below.
             </p>
             <div class="table-responsive">
-              <table class="mx-auto w-auto">
-              <tbody>
-                <tr>
-                  <td>SID：</td>
-                  {{{this.r_sid}}}
-                </tr>
-                <tr>
-                  <td>Status：</td>
-                  {{{this.r_status}}}
-                </tr>
-                <tr>
-                  <td>Object：</td>
-                  {{{this.r_object}}}
-                </tr>
-                <tr>
-                  <td>Remark：</td>
-                  {{{this.r_remark}}}
-                </tr>
-              </tbody>
-            </table>
+                <table class="mx-auto w-auto">
+                    <tbody>
+                        <tr>
+                            <td>SID：</td>
+                            {{{this.r_sid}}}
+                        </tr>
+                        <tr>
+                            <td>Status：</td>
+                            {{{this.r_status}}}
+                        </tr>
+                        <tr>
+                            <td>Object：</td>
+                            {{{this.r_object}}}
+                        </tr>
+                        <tr>
+                            <td>Remark：</td>
+                            {{{this.r_remark}}}
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            
+
             <br><br>
             <form action="http://localhost:8081/result_seller" method="Post">
-              <p style="font-size:24px; color:#3496d8">Your decision:</p>
-              <br><br>
-              <input type="radio" name="result" value="accept" required> Accept
-              <br><br>
-              <input type="radio" name="result" value="refuse"> Refuse
-              <br><br>
-              <input type="radio" name="result" value="end"> Cancel/End
-              <br><br>
-              <input type="submit" class="tm-btn-primary" style="border-color: white" value="Submit"></input>
+                <p style="font-size:24px; color:#3496d8">Your decision:</p>
+                <br><br>
+                <input type="radio" name="result" value="accept" required> Accept
+                <br><br>
+                <input type="radio" name="result" value="refuse"> Refuse
+                <br><br>
+                <input type="radio" name="result" value="end"> Cancel/End
+                <br><br>
+                <input type="submit" class="tm-btn-primary" style="border-color: white" value="Submit"></input>
             </form>
             <br><br>
             <br><br>

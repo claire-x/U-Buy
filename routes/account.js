@@ -19,6 +19,7 @@ router.get('/', function (req, res) {
         times = result[0].judgement_times;
         total_scores = result[0].total_scores;
         User_rating = total_scores / times;
+        User_rating = User_rating.toFixed(2);
 
         // render the hbs document
         res.render('account.hbs', {
