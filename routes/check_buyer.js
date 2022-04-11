@@ -292,7 +292,7 @@ router.post('/', function (req, res) {
                   '<input type="radio" name="result" value="refuse"> Refuse'+
                   '<br><br>' +
                   '<input type="radio" name="result" value="end"> Cancel/End'+
-                  '<br><br>'
+                  '<br><br>'+
                   '<input type="submit" class="tm-btn-primary" style="border-color: white" value="Submit"></input>'+
               '</form>';
 
@@ -377,13 +377,12 @@ router.post('/', function (req, res) {
                           '<form action="http://localhost:8081/result_buyer" method="Post">' +
                           ' <p style="font-size:24px; color:#3496d8">Your decision:</p>' +
                           '<br><br>' +
-
                           '<input type="radio" name="result" value="accept" required> Accept' +
                           '<br><br>' +
                           '<input type="radio" name="result" value="refuse"> Refuse' +
                           '<br><br>' +
                           '<input type="radio" name="result" value="end"> Cancel/End' +
-                          '<br><br>'
+                          '<br><br>'+
                       '<input type="submit" class="tm-btn-primary" style="border-color: white" value="Submit"></input>' +
                           '</form>';
 

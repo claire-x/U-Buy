@@ -292,7 +292,7 @@ router.post('/', function (req, res) {
                                 '<input type="radio" name="result" value="refuse"> Refuse' +
                                 '<br><br>' +
                                 '<input type="radio" name="result" value="end"> Cancel/End' +
-                                '<br><br>'
+                                '<br><br>'+
                             '<input type="submit" class="tm-btn-primary" style="border-color: white" value="Submit"></input>' +
                                 '</form>';
 
@@ -379,7 +379,7 @@ router.post('/', function (req, res) {
                           '<input type="radio" name="result" value="refuse"> Refuse' +
                           '<br><br>' +
                           '<input type="radio" name="result" value="end"> Cancel/End' +
-                          '<br><br>'
+                          '<br><br>'+
                       '<input type="submit" class="tm-btn-primary" style="border-color: white" value="Submit"></input>' +
                           '</form>';
 
