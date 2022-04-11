@@ -40,6 +40,18 @@ var dbprocess = {
         })
 
     },
+    modify_post:function(uid){
+        pool.getConnection(function(err,connection){
+        if(err){throw err}
+        let sql = 'UPDATE `post` set `if_matched` = 1 where `id` ='+uid+';'
+        console.log("has successful modify post table")
+        connection.query(sql,function(err,result){
+            if(err){
+                throw(err)
+            }
+            else{
+                console.log("successful modify post table if_matched into 1")
+            }})  })},
 
 
     add_negotiation_process: function(uid,sid,cid){
