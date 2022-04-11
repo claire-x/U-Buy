@@ -36,8 +36,7 @@ app.use(user.authenticate);
 var index =require('./routes/index');
 var login = require('./routes/login');
 var signup = require('./routes/signup');
-var logout = require('./routes/logout');/*
-var deleteAccount = require('./routes/deleteAccount');*/
+var logout = require('./routes/logout');
 var account = require('./routes/account');
 var process_buyer = require('./routes/process_buyer');
 var process_seller = require('./routes/process_seller');
@@ -77,8 +76,7 @@ initRoutes2(app);
 app.use("/", index);
 app.use("/login", login);
 app.use('/signup', signup);
-app.use('/logout', logout);/*
-app.use('/deleteAccount', deleteAccount);*/
+app.use('/logout', logout);
 app.use('/account_page', account);
 app.use('/process_buyer', process_buyer);
 app.use('/process_seller', process_seller);
