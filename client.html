@@ -302,7 +302,7 @@
                 'type':'get','data':{'instruction':"delete",'id':query.sid,'type':'seller'},success:function(data){
 
                     if(data == "ok to evaluate")
-                        window.location.href = '../evaluate.html?id='+query.cid
+                        window.location.href = '../evaluate.html?id='+query.sid
                     if(data=="wait")
                         window.location.href='../evaluate3.html'
                     if(data=="fail")
