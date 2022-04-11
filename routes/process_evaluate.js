@@ -1,4 +1,4 @@
-
+333
 var express = require('express');
 let router = express.Router();
 var mysql  = require('mysql'); 
@@ -95,6 +95,8 @@ router.get('/delete',function(req,res){
                 }
                 else if(result[0].negotiation_prase == 3 && type =='buyer'){
                         res.write('ok to evaluate')
+                        formdb = require('../plugin/forumdb')
+                        formdb.modify_post(uid);
                         value = 4
                 }
                 else if(result[0].negotiation_prase ==2 && type == 'buyer'){
@@ -114,6 +116,8 @@ router.get('/delete',function(req,res){
                 }
                 else if(result[0].negotiation_prase == 5 && type =='seller'){
                         res.write('ok to evaluate')
+                        formdb = require('../plugin/forumdb')
+                        formdb.modify_post(uid);
                         value = 4
                 }
                 else if (result[0].negotiation_prase ==1 && type == 'seller'){
