@@ -98,8 +98,17 @@ router.get('/delete',function(req,res){
                     res.write('ok to evaluate')
                     formdb = require('../plugin/forumdb')
                     formdb.modify_post(uid);
-                    formdb.delete_match_result_1(uid);
-                    formdb.delete_match_result_2(uid);
+                    formdb.delete_match_result_1(uid, function (result) {
+                        if (result.affectedRows) {
+                            console.log("delete, pid1");
+                        }
+                    });
+
+                    formdb.delete_match_result_2(uid, function (result) {
+                        if (result.affectedRows) {
+                            console.log("delete, pid2");
+                        }
+                    });
 
                     value = 4
                 }
@@ -122,8 +131,17 @@ router.get('/delete',function(req,res){
                     res.write('ok to evaluate')
                     formdb = require('../plugin/forumdb')
                     formdb.modify_post(uid);
-                    formdb.delete_match_result_1(uid);
-                    formdb.delete_match_result_2(uid);
+                    formdb.delete_match_result_1(uid, function (result) {
+                        if (result.affectedRows) {
+                            console.log("delete, pid1");
+                        }
+                    });
+
+                    formdb.delete_match_result_2(uid, function (result) {
+                        if (result.affectedRows) {
+                            console.log("delete, pid2");
+                        }
+                    });
 
                     value = 4
                 }
