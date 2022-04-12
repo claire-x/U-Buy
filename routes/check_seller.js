@@ -283,11 +283,10 @@ router.post('/', function (req, res) {
 
                             var yourDecision =
                                 '<form action="http://localhost:8081/result_seller" method="Post">' +
-                                ' <p style="font-size:24px; color:#3496d8">Your decision:</p>' +
                                 '<br><br>' +
-                                '<input type="radio" name="result" value="accept" required> Accept' +
+                                '<input type="radio" name="result" value="accept" required> I am notified of this match.' +
                                 '<br><br>' +
-                                '<input type="radio" name="result" value="refuse"> Refuse and delete' +
+                                '<input type="radio" name="result" value="refuse">  I am notified, but I do not want to match again, please delete my trading message.' +
                                 '<br><br>' +
                             '<input type="submit" class="tm-btn-primary" style="border-color: white" value="Submit"></input>' +
                                 '</form>';
@@ -376,11 +375,10 @@ router.post('/', function (req, res) {
 
                       var yourDecision =
                           '<form action="http://localhost:8081/result_seller" method="Post">' +
-                          ' <p style="font-size:24px; color:#3496d8">Your decision:</p>' +
                           '<br><br>' +
-                          '<input type="radio" name="result" value="accept" required> Accept' +
+                          '<input type="radio" name="result" value="accept" required> I am notified of this match.' +
                           '<br><br>' +
-                          '<input type="radio" name="result" value="refuse"> Refuse and delete' +
+                          '<input type="radio" name="result" value="refuse">  I am notified, but I do not want to match again, please delete my trading message.' +
                           '<br><br>' +
                       '<input type="submit" class="tm-btn-primary" style="border-color: white" value="Submit"></input>' +
                           '</form>';
