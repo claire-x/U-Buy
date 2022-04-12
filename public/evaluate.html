@@ -118,7 +118,6 @@
     <script src="ajax.js"></script>
     <script src="./js/entering.js"></script>
     <script>
-        init();
         var score = 0
 
 
@@ -167,33 +166,6 @@
 
         }
 
-
-        function init() {
-            // body...
-            document.getElementById("report").style.display = 'block';
-
-            document.getElementById("freerider").style.display = 'block';
-            change("report");
-            change("freerider");
-        }
-
-        function change(name) {
-            var e = document.getElementById(name);
-            if (e.style.display == 'block')
-                e.style.display = 'none';
-            else
-                e.style.display = 'block';
-        }
-
-        function update() {
-            // body...
-            if (document.getElementById("choice").value == "TM") {
-                document.getElementById("report").style.display = 'initial';
-                document.getElementById("freerider").style.display = 'initial';
-            } else {
-                init();
-            }
-        }
         function ajax(json) {
             if (window.XMLHttpRequest) {
                 var ajax = new XMLHttpRequest();

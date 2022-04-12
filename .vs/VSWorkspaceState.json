@@ -1,8 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\sql",
-    "\\views"
+    "\\public"
   ],
+  "SelectedNode": "\\public\\bg.jpg",
   "PreviewInSolutionExplorer": false
 }

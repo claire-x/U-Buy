@@ -287,10 +287,8 @@ router.post('/', function (req, res) {
                                 '<br><br>' +
                                 '<input type="radio" name="result" value="accept" required> Accept' +
                                 '<br><br>' +
-                                '<input type="radio" name="result" value="refuse"> Refuse' +
+                                '<input type="radio" name="result" value="refuse"> Refuse and delete' +
                                 '<br><br>' +
-                                '<input type="radio" name="result" value="end"> Cancel/End' +
-                                '<br><br>'+
                             '<input type="submit" class="tm-btn-primary" style="border-color: white" value="Submit"></input>' +
                                 '</form>';
 
@@ -345,7 +343,11 @@ router.post('/', function (req, res) {
                         l_remark = l_remark + "<td id ='remark" + i + "'>" + datasC[0].remark2 + "</td>";
                         l_status = l_status + "<td id ='status" + i + "'>" + reply + "</td>";
                         var instruct = 'See if the SELLER has initiated a Trading Chat, <br>'+
-                'if not, contact and ask him/her for it use the info. below.'
+                            'if not, contact and ask him/her for it use the info. below.'
+
+                        var sellerPostID = { sellerPID: datasC[0].pid2 };
+                        res.cookie('sellerPostID', sellerPostID, { maxAge: 2 * 3600 * 1000 });
+
                         res.render('YesSeller.hbs',{
                           layout: null,
                           r_object: l_object,
@@ -378,10 +380,8 @@ router.post('/', function (req, res) {
                           '<br><br>' +
                           '<input type="radio" name="result" value="accept" required> Accept' +
                           '<br><br>' +
-                          '<input type="radio" name="result" value="refuse"> Refuse' +
+                          '<input type="radio" name="result" value="refuse"> Refuse and delete' +
                           '<br><br>' +
-                          '<input type="radio" name="result" value="end"> Cancel/End' +
-                          '<br><br>'+
                       '<input type="submit" class="tm-btn-primary" style="border-color: white" value="Submit"></input>' +
                           '</form>';
 

@@ -53,7 +53,8 @@ res.end()
 })
 router.get('/delete',function(req,res){
         var json = urlLib.parse(req.url,true).query;
-        var type = json['type'];
+    var type = json['type'];
+    var sellerPostID = req.cookies.sellerPostID.sellerPID;
         if(type == "buyer"){
                 var buyer = parseInt(req.cookies.islogin.sid); 
                 var seller = parseInt(json['id'].substring(0,10));
@@ -98,6 +99,7 @@ router.get('/delete',function(req,res){
                     res.write('ok to evaluate')
                     formdb = require('../plugin/forumdb')
                     formdb.modify_post(uid);
+                    formdb.modify_post(sellerPostID);
                     formdb.delete_match_result_1(uid, function (result) {
                         if (result.affectedRows) {
                             console.log("delete, pid1");
@@ -131,6 +133,7 @@ router.get('/delete',function(req,res){
                     res.write('ok to evaluate')
                     formdb = require('../plugin/forumdb')
                     formdb.modify_post(uid);
+                    formdb.modify_post(sellerPostID);
                     formdb.delete_match_result_1(uid, function (result) {
                         if (result.affectedRows) {
                             console.log("delete, pid1");

@@ -84,6 +84,21 @@ router.post('/', function (req, res) {
     module.exports = DeleteObj;
     DelObj = new DeleteObj();
 
+
+    // function to delete matchResult
+    function matchResult() {
+        this.select = function (pid) {
+            var sql = 'DELETE FROM match_result where pid1 =' + pid;
+            pool.query(sql, function (err) {
+                if (err) { console.log(err); }
+            });
+        };
+    }
+    module.exports = matchResult;
+    matchResult = new matchResult();
+
+
+
     datas = Array;  
     ChRE.select(function(rdata){
         datas = rdata;
@@ -104,19 +119,15 @@ router.post('/', function (req, res) {
                 // waiting for the other one's acceptance
                 else{ SiupRE.select(userID,num,1); }
             }
-
-            // user refuse the result
-            else if (req.body.result=="refuse"){ 
-                UpRE.select(userID,0); 
-            }
+            // delete both match_result and post
             else {
-                UpRE.select(userID,-1);
+                matchResult.select(datas[0].pid1);
                 DelObj.select(userID,datas[0].pid1); 
             }
 
         }
 
-        else {
+        else {// it will never happen
             if(req.body.result=="end") {
                 UpRE.select(userID,-1);
                 DelObj.select(userID,datas[0].pid1); 

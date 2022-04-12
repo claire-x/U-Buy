@@ -287,10 +287,8 @@ router.post('/', function (req, res) {
                   '<br><br>'+
                   '<input type="radio" name="result" value="accept" required> Accept'+
                   '<br><br>'+
-                  '<input type="radio" name="result" value="refuse"> Refuse'+
+                  '<input type="radio" name="result" value="refuse"> Refuse and delete'+
                   '<br><br>' +
-                  '<input type="radio" name="result" value="end"> Cancel/End'+
-                  '<br><br>'+
                   '<input type="submit" class="tm-btn-primary" style="border-color: white" value="Submit"></input>'+
               '</form>';
 
@@ -350,6 +348,10 @@ router.post('/', function (req, res) {
 
                         var instruct = 'Please click below and initiate a <b>Trading Chat</b>.';
 
+                        var sellerPostID = { sellerPID: datasC[0].pid2 };
+                        res.cookie('sellerPostID', sellerPostID, { maxAge: 2 * 3600 * 1000 });
+
+
                         res.render('YesBuyer.hbs',{
                           layout: null,
                           r_object: l_object,
@@ -382,10 +384,8 @@ router.post('/', function (req, res) {
                           '<br><br>' +
                           '<input type="radio" name="result" value="accept" required> Accept' +
                           '<br><br>' +
-                          '<input type="radio" name="result" value="refuse"> Refuse' +
+                          '<input type="radio" name="result" value="refuse and delete"> Refuse and delete' +
                           '<br><br>' +
-                          '<input type="radio" name="result" value="end"> Cancel/End' +
-                          '<br><br>'+
                       '<input type="submit" class="tm-btn-primary" style="border-color: white" value="Submit"></input>' +
                           '</form>';
 
