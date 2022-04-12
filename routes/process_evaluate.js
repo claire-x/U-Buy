@@ -54,7 +54,13 @@ res.end()
 router.get('/delete',function(req,res){
         var json = urlLib.parse(req.url,true).query;
     var type = json['type'];
-    var sellerPostID = req.cookies.sellerPostID.sellerPID;
+    var sellerPostID = 0;
+    if (req.cookies.sellerPostID) {
+        console.log('there is a seller PID');
+        sellerPostID = req.cookies.sellerPostID.sellerPID;
+        console.log('it is' + sellerPostID);
+    }
+
         if(type == "buyer"){
                 var buyer = parseInt(req.cookies.islogin.sid); 
                 var seller = parseInt(json['id'].substring(0,10));
