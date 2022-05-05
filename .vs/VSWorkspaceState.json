@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\plugin"
   ],
-  "SelectedNode": "\\keyboarder.ico",
+  "SelectedNode": "\\plugin\\forumdb.js",
   "PreviewInSolutionExplorer": false
 }
