@@ -1,4 +1,11 @@
-/* ref: https://github.com/LI-YUXIN-Ryan-Garcia/CUPar-CSCI3100-Project.git */
+/**
+ *
+ *  @programmer: Hui Lam Lam; Zhang chi
+ *  @version: 2.0 (1 APR 22)
+ *
+ * ref: https://github.com/LI-YUXIN-Ryan-Garcia/CUPar-CSCI3100-Project.git
+ */
+
 var mysql = require('mysql');
 var config = require('../config').config;
 
