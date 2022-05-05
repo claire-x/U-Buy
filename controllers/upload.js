@@ -1,3 +1,6 @@
+/*
+ * ref: https://github.com/bezkoder/nodejs-upload-image-mysql.git
+ */
 const fs = require("fs");
 
 const db = require("../models");

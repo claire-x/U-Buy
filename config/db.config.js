@@ -1,3 +1,7 @@
+/*
+ * database for storing image info
+ * ref: https://github.com/bezkoder/nodejs-upload-image-mysql.git
+ */
 module.exports = {
   HOST: "localhost",
   USER: "root",

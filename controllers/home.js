@@ -1,3 +1,6 @@
+/*
+ * ref: https://github.com/bezkoder/nodejs-upload-image-mysql.git
+ */
 const path = require("path");
 
 const home = (req, res) => {

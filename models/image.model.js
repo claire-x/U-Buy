@@ -1,3 +1,7 @@
+/*
+ * ref: https://github.com/bezkoder/nodejs-upload-image-mysql.git
+ */
+
 module.exports = (sequelize, DataTypes) => {
   const Image = sequelize.define("image", {
     type: {

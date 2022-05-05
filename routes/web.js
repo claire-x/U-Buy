@@ -1,3 +1,8 @@
+/**
+ * Module to handle profile photo upload
+ * ref: https://github.com/bezkoder/nodejs-upload-image-mysql.git
+ */
+
 const express = require("express");
 const router = express.Router();
 const homeController = require("../controllers/home");
