@@ -1,3 +1,10 @@
+/**
+ * Module to render user account page
+ *
+ *  @programmer: Hui Lam Lam
+ *  @version: 1.0 (1 APR 22)
+ */
+
 
 var express = require('express');
 let router = express.Router();
@@ -5,12 +12,12 @@ var findUser = require('../plugin/database');
 
 router.get('/', function (req, res) {
 
-    // If user hasn't logged in
+    // visitor
     if (!req.session.passport) {
         res.redirect('/login');
     }
 
-    // get user's information
+    // user info
     let user_name = req.cookies.islogin.name;
     let userID = req.cookies.islogin.sid;
 
@@ -21,7 +28,7 @@ router.get('/', function (req, res) {
         User_rating = total_scores / times;
         User_rating = User_rating.toFixed(2);
 
-        // render the hbs document
+        // render account.hbs
         res.render('account.hbs', {
             layout: null,
             name: user_name,

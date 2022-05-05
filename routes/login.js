@@ -1,4 +1,8 @@
-/* ref: https://github.com/LI-YUXIN-Ryan-Garcia/CUPar-CSCI3100-Project.git */
+/**
+ * Module to handle general user login
+ * ref: https://github.com/LI-YUXIN-Ryan-Garcia/CUPar-CSCI3100-Project.git
+ */
+
 var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');

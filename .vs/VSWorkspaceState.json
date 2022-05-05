@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\plugin"
   ],
-  "SelectedNode": "\\views\\YesSeller.hbs",
+  "SelectedNode": "\\plugin\\forumdb.js",
   "PreviewInSolutionExplorer": false
 }

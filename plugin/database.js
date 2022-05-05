@@ -16,12 +16,12 @@ function create_pool(){
 
 var pool = new create_pool()
 
-// Select user data by sid
+// find user info given user sid
 exports.select_user_data = function(sid, callback){
     let sql = 'SELECT * FROM account WHERE BINARY `sid`="' + sid + '"'
     pool.query(sql, function(err, user_list){
         if(err){
-            console.error("Some error(s) raised from select_user_data():")
+            console.error("Error: select_user_data():")
             console.error(err)
             console.error('--------------------')
         }
@@ -32,11 +32,12 @@ exports.select_user_data = function(sid, callback){
     })
 }
 
+// find all user info given user sid
 exports.select_all_user = function (callback) {
     let sql = 'SELECT * FROM account'
     pool.query(sql, function (err, user_list) {
         if (err) {
-            console.error("Some error(s) raised from select_user_data():")
+            console.error("Error: select_all_data():")
             console.error(err)
             console.error('--------------------')
         }
@@ -73,7 +74,7 @@ exports.verify_admin_identity = function (aid, password, callback) {
     })
 }
 
-//Insert a user
+// add inactive user
 exports.insert_unactive_user = function(sid, name, code, callback){
     let sql = 'INSERT INTO ?? (??,??,??,??,??,??) VALUES (?,?,?,?,?,?)'
     let params = [config.tb_account].concat(config.tb_account_params)
@@ -84,13 +85,13 @@ exports.insert_unactive_user = function(sid, name, code, callback){
         if(err){throw err}
         if(res && typeof callback == 'function'){
             callback(res)
-            console.log(res.insertID)   // added
+            console.log(res.insertID)  
         }
     })
-    console.error("Some error(s) were raised from insert_unactive_user():")
+    console.error("Error:  insert_unactive_user():")
 }
 
-// update user data
+// update user info
 exports.update_user = function(sid, data, callback){
     let params_keys = Object.keys(data)
     let params_array = params_keys.map(key => "`" + key + "`='" + data[key] + "'")
@@ -106,13 +107,13 @@ exports.update_user = function(sid, data, callback){
             }
         })
     }catch(err){
-        console.error('Some error(s) were raised from update_user() ')
+        console.error('Error:  update_user() ')
         console.error(err)
     }
 }
 
 print_func_err = function(name,err){
-    console.error("Some error(s) raised from " + name + "():")
+    console.error("Error: " + name + "():")
     console.error(err)
     console.error('<=----------------------------------------=>')
 }

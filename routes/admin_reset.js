@@ -1,3 +1,9 @@
+/**
+ * Module to handle user password resetting by admin
+ * ref: https://github.com/LI-YUXIN-Ryan-Garcia/CUPar-CSCI3100-Project.git
+ */
+
+
 var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
@@ -17,18 +23,18 @@ router.get('/', function (req, res) {
 router.post('/', urlencodedParser, function (req, res) {
     let sid = req.body.sid;
     DB.select_user_data(sid, function (result) {
-        if (result.length === 0) { // have not registed yet
+        if (result.length === 0) { // the user have not registed 
             res.render('admin_reset_acct.hbs', {
                 layout: null,
                 warning: 'The user have not registed yet'
             });
-        } else { // have registed already
-            if (result[0].state === 1) { // active
-                    // continue to reset pwd
-                    req.session.sid = { sid: sid }; // save identity
+        } else { // registed user
+            if (result[0].state === 1) { // active account
+                    // reset password
+                    req.session.sid = { sid: sid }; // save sid
                     res.redirect('/admin_reset/pwd');
             }
-            else { // inactive
+            else { // inactive account
                 res.render('admin_reset_acct.hbs', {
                     layout: null,
                     message: 'It is an inactive account',
@@ -40,11 +46,12 @@ router.post('/', urlencodedParser, function (req, res) {
 });
 
 
-// the subrouter for reset password
+//  reset password
 router.get('/pwd', function (req, res) {
-    if (!req.session.sid) {   // refuse invalid access
+    if (!req.session.sid) { 
         return res.redirect('/login');
     }
+    // render admin_reset_pwd.hbs
     res.render('admin_reset_pwd.hbs', {
         layout: null,
         info: 'Please enter the new password'
@@ -53,27 +60,28 @@ router.get('/pwd', function (req, res) {
 
 router.post('/pwd', function (req, res) {
     let sid = req.session.sid.sid;
-    res.session = null; // clean sesssion
+    res.session = null; 
     let password = req.body.password;
     let passwordRP = req.body.passwordRP;
 
-    if (password !== passwordRP) { // passwords don't match
+    if (password !== passwordRP) {
+        // two passwords are not the same
         return res.render('admin_reset_pwd.hbs', {
             layout: null,
             error: 'Please confirm your password.'
         });
     }
 
-    password = md5(password); // encrypt the password
+    password = md5(password); 
     // find the user
     DB.select_user_data(sid, function (result) {
         if (result.length === 0) {
-            return console.log(" Can't find the user, error");
+            return console.log(" Error: user not found");
         }
         let data_set = { password: password };
         DB.update_user(sid, data_set, callback = function (err) {
             if (err) {
-                console.error('----Some error(s) happened while udpating user pwd')
+                console.error('Error: cannot update user password')
             }
             res.render('admin_reset_pwd.hbs', {
                 layout: null,

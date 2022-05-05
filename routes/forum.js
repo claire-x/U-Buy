@@ -1,19 +1,23 @@
-/* ref: https://github.com/LI-YUXIN-Ryan-Garcia/CUPar-CSCI3100-Project.git */
+/**
+ * Module to handle general user login
+ * ref: https://github.com/LI-YUXIN-Ryan-Garcia/CUPar-CSCI3100-Project.git
+ */
+
 var express = require('express');
 var router = express.Router();
 var postnum;
 var datainDB = require('../plugin/forumdb');
 
-//list all posts
+// show all public posts in the post DB
 router.get('/', function(req, res) {
-    // ensure user has logged in, if not redirect to login page
-    if( !req.session.passport ){ 
+    if (!req.session.passport) {
+        // user hasn't logged in
         res.redirect('/login');
     }
     else{
-        // show all public in database
+        // return public posts
 	    datainDB.displayPosts(function(result){
-            // deal with situation that there's no public post
+            // posts are all private or no post was found
             console.log(result)
             postnum = result.length;
             if(result.length != 0)
@@ -23,16 +27,17 @@ router.get('/', function(req, res) {
         });
     }
 });
-//list the user's all post
+
+// show my post
 router.get('/mypost',function(req,res){
-    // ensure user has logged in, if not redirect to login page
-    if(!req.session.passport){
+    if (!req.session.passport) {
+        // user hasn't logged in
         res.redirect('/login');
     }
     else{
-        // show all posts of the user
+        // return my posts
         datainDB.displayMyPost(req.cookies.islogin.id,function(result){
-            // deal with situation that the user hasn't released any post
+            // user has't post anything
             mypostnum = result.length;
             if(result.length != 0)
 		    res.render('mypost.ejs',{ data:result,datalength: mypostnum });
@@ -41,4 +46,5 @@ router.get('/mypost',function(req,res){
         });
     }
 })
+
 module.exports = router;

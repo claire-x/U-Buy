@@ -18,9 +18,9 @@ exports.send = function (mailOptions, callback) {
         // default email
         from: '"U Buy" <' + config.mail_account + '>',
         to: 'koulimlim@gmail.com',
-        subject: 'Test',
-        text: 'this is a test email',
-        html: '<b>The main content of the mail. You have successfully logged in to Nodejs.</b>' 
+        subject: 'Defaut',
+        text: 'defaut email',
+        html: '<b> send a defaut email.</b>'
     };
 
     transporter.sendMail(mailOptions, function (error, info){
@@ -33,7 +33,7 @@ exports.send = function (mailOptions, callback) {
     });
 };
 
-// the template email for reset password
+// email for resetting user psw
 exports.resetEmail = function( email, name, code){
     return {
         from: '"U Buy" <'+ config.mail_account +'>',
@@ -53,7 +53,7 @@ U Buy Corporation Limited
     };
 };
 
-// the template email for authentication
+// email for signup
 exports.authEmail = function( email, name, code){
     return {
         from: '"U Buy" <'+ config.mail_account +'>',
@@ -65,27 +65,6 @@ Hi ` + name + ` :
     
     Welcome! Here is your CAPTCHA Code for authentication: <b>` + code + `</b> , please enter it into form in 10 minitues :)
     Thank you for your registration. Here is U Buy, a second-hand trading platform for all CUHK Undergraduate students! Start to look for your buyer/seller now!
-    
-
-Best wishes,
-U Buy Corporation Limited
-</pre> 
-`
-    };
-};
-
-// the template email for deletion
-exports.delEmail = function( email, name, code){
-    return {
-        from: '"U Buy" <'+ config.mail_account +'>',
-        to: email,
-        subject: "The CAPTCHA for your to sign up U Buy",
-html: `
-<pre style="font-family:calibri;font-size:17px">
-Dear ` + name + ` : 
-    
-    Thank you for your usage. We are sorry to hear that you want to leave. Here is your CAPTCHA Code for authentication: <b>` + code + `</b> , please enter it into form in 10 minitues :)
-    We are looking forward to you coming back. Here is U Buy, a second-hand trading platform for all CUHK Undergraduate students!
     
 
 Best wishes,

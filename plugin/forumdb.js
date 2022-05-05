@@ -1,7 +1,14 @@
-/* ref: https://github.com/LI-YUXIN-Ryan-Garcia/CUPar-CSCI3100-Project.git */
+/**
+ *
+ *  @programmer: Hui Lam Lam; Zhang chi
+ *  @version: 2.0 (1 APR 22)
+ *
+ * ref: https://github.com/LI-YUXIN-Ryan-Garcia/CUPar-CSCI3100-Project.git
+ */
+
 var mysql = require('mysql');
 var config = require('../config').config;
-// create connection pool to enhance efficiency 
+
 var pool = mysql.createPool({
     host : 'localhost',
     user : 'root',
@@ -10,6 +17,7 @@ var pool = mysql.createPool({
 });
 
 var dbprocess = {
+    // update a negotiation process
     update_negotiation_process: function(uid,sid,cid,value,callback){
         pool.getConnection(function(err,connection) {
             if (err) throw err;
@@ -25,6 +33,7 @@ var dbprocess = {
         })
 
     },
+    // query a negotiation process
     query_negotiation_process: function(uid,sid,cid,callback){
         pool.getConnection(function(err,connection) {
             if (err) throw err;
@@ -40,6 +49,7 @@ var dbprocess = {
         })
 
     },
+    // modify if_matched into 1
     modify_post:function(uid){
         pool.getConnection(function(err,connection){
         if(err){throw err}
@@ -53,7 +63,7 @@ var dbprocess = {
                 console.log("successful modify post table if_matched into 1")
             }})  })},
 
-
+    // add negotiation process
     add_negotiation_process: function(uid,sid,cid){
         pool.getConnection(function(err,connection) {
             if (err) throw err;
@@ -69,6 +79,7 @@ var dbprocess = {
 
     },
 
+    // delete a post
     delete: function (postid, callback) {
         pool.getConnection(function (err, connection) {
             if (err) throw err;
@@ -83,7 +94,7 @@ var dbprocess = {
         });
     },
 
-
+    // delete match result once a post get deleted
     delete_match_result_1: function (postid, callback) {
         pool.getConnection(function (err, connection) {
             if (err) throw err;
@@ -98,6 +109,7 @@ var dbprocess = {
         });
     },
 
+    // delete match result once a post get deleted
     delete_match_result_2: function (postid, callback) {
         pool.getConnection(function (err, connection) {
             if (err) throw err;
@@ -112,102 +124,92 @@ var dbprocess = {
         });
     },
 
-    // change the status of post in database to private using "update"
+    // update the post status to be private
     setPrivate:function(postid,params,callback){
         pool.getConnection(function(err,connection){
             if(err) throw err;
             let strSql ='UPDATE `post` SET ? WHERE `id` = '+postid;
             connection.query(strSql, params, function(err, result){
                 connection.release();
-                if(err) 
-                    {
-                        console.error(err);
+                if(err) {
+                   console.error(err);
                 }
                 callback(result);
             })
         });
     },
-    // change the status of post in database to public using "update"
+    // update the post status to be public
     setPublic:function(postid,params,callback){
         pool.getConnection(function(err,connection){
             if(err) throw err;
             let strSql ='UPDATE `post` SET ? WHERE `id` = '+postid;
             connection.query(strSql, params, function(err, result){
                 connection.release();
-                if(err) 
-                    {
-                        console.error(err);
+                if (err) {
+                    console.error(err);
                 }
                 callback(result);
             })
         });
     },
-    // add new post in "post" table using "insert"
+    // inser a newly created post
     addPost:function (params, callback){
         pool.getConnection(function(err, connection){
             if(err) throw err;
             let strSql ='INSERT INTO `post` SET ?';
             connection.query(strSql, params, function(err, result){
                 connection.release();
-                
-                if(err) 
-                    {
-                        console.error(err);
+                if (err) {
+                    console.error(err);
                 }
-
                 callback(result);
             })
         });
     },
-    // add a new comment in "comment" table using "insert"
+    // insert reply
     addReply : function(params, callback){
         pool.getConnection(function(err, connection){
             if(err) throw err;
             let strSql = 'INSERT INTO `comment` SET ?';
             connection.query(strSql, params, function(err, result){
                 connection.release();
-                if(err) 
-                    {
-                        console.error(err);
+                if (err) {
+                    console.error(err);
                 }
                 callback(result);
             })
         });
     },
-    // display all public posts in "post" table using "select"
+    // get all public posts
     displayPosts : function(callback){
         pool.getConnection(function(err, connection){
             if(err) throw err;
             let strSql ='SELECT `post`.*, name,SID FROM `post`, `account` WHERE `post`.`status`= 0 AND `post`.`uid`=`account`.`id` ';
             connection.query(strSql, function(err, result){
                 connection.release();
-                if(err) 
-                    {
-                        console.error(err);
+                if (err) {
+                    console.error(err);
                 }
                 callback(result);
             })
         });
     },
-    // display the user's all posts in "post" table using "select"
+    // get my posts
     displayMyPost : function(id,callback){
         pool.getConnection(function(err, connection){
             if(err) throw err;
             let strSql ='SELECT `post`.* FROM `post` WHERE `post`.`uid`= '+id;
             connection.query(strSql, function(err, result){
                 connection.release();
-                
-                if(err) 
-                    {
-                        console.error(err);
+                if (err) {
+                    console.error(err);
                 }
-
                 callback(result);
                 
             })
         });
     },
-    // display the specific post all information
+    // get detail for a post
     getPost:function (id, callback){
         pool.getConnection(function(err, connection){
             if(err) throw err;
@@ -215,12 +217,13 @@ var dbprocess = {
             connection.query(strSql, [id], function(err, result){
                 connection.release(); 
                 if(err) {
-                    console.error(err);}
+                    console.error(err);
+                }
                 callback(result);
             })
         });
     },
-    // display all comments from the specific post
+    // get comments for a post
     getReply : function(postid, callback){
         pool.getConnection(function(err, connection){
             if(err) throw err;
@@ -228,8 +231,8 @@ var dbprocess = {
             connection.query(strSql, [postid], function(err, result){
                 connection.release(); 
                 if(err) {
-                    console.error(err);}
-                    
+                    console.error(err);
+                }    
                 callback(result);
                 
             })

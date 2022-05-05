@@ -1,3 +1,7 @@
+/*
+ * ref: https://github.com/bezkoder/nodejs-upload-image-mysql.git
+ */
+
 const dbConfig = require("../config/db.config.js");
 
 const Sequelize = require("sequelize");

@@ -1,3 +1,7 @@
+/*
+ * ref: https://github.com/bezkoder/nodejs-upload-image-mysql.git
+ */
+
 const multer = require("multer");
 
 const imageFilter = (req, file, cb) => {
