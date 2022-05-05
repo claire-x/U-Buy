@@ -1,4 +1,16 @@
-
+/**
+ * A router handles the request of checking the result of matching buyers.
+ * 
+ * The user need to click the button in account page to check the matching result of buyer.
+ * And name, sid, object name, and other relevant information will be shown in a new page.
+ * When the match is successful and both user are notified with the match, 
+ * the user can initiate a chatroom and go to chat with the buyer.
+ * 
+ * @author XU Yuhan, HUI Lam Lam
+ * @version 3.0
+ * 
+ * ref: https://github.com/LI-YUXIN-Ryan-Garcia/CUPar-CSCI3100-Project.git
+ */
 var express = require('express');
 let router = express.Router();
 var mysql  = require('mysql');  
@@ -180,6 +192,7 @@ router.post('/', function (req, res) {
         if(datas[0].object!="Nothing") {
     
           // check number of the objects this user want to sell (posted)
+          // all objects wait for seller will be shown on the result page
           var postList_len = count(datas);
           var AllPid = [];
           for (let i=0;i<postList_len;i++) {

@@ -1,4 +1,16 @@
-
+/**
+ * A router handles the request of checking the result of matching sellers.
+ * 
+ * The user need to click the button in account page to check the matching result of seller.
+ * And name, sid, object name, and other relevant information will be shown in a new page.
+ * When the match is successful and both user are notified with the match, 
+ * the user can go to chat with the seller.
+ * 
+ * @author XU Yuhan, HUI Lam Lam
+ * @version 3.0
+ * 
+ * ref: https://github.com/LI-YUXIN-Ryan-Garcia/CUPar-CSCI3100-Project.git
+ */
 var express = require('express');
 let router = express.Router();
 var mysql  = require('mysql');  
@@ -32,7 +44,7 @@ router.post('/', function (req, res) {
   var pool = new link();
 
   function SearchID() {
-    // function to search the info with given SID for this user as a seller
+    // function to search the info with given SID for this user as a buyer
     this.select=function(callback,id){
       var sql = 'SELECT distinct * FROM post where user_sid = ' + id + ' AND category = "Seller" And if_matched != 1';
       var option = {};
@@ -55,7 +67,7 @@ router.post('/', function (req, res) {
   module.exports = SearchID;
 
   function MatchID(){ 
-    // function to filter the data with the given info, including info like object's name, category (to dind seller or to find buyer), accepted price range, preferred transaction place (college)
+    // function to filter the data with the given info, including info like object's name, category (to find seller or to find buyer), accepted price range, preferred transaction place (college)
     this.select=function(callback1,datas){
       // Besides the same info, it also needed to be assured that it's buyer/seller matched, and not the same person
       var sql1 = 'SELECT * FROM post where category !=? AND college IN (?, "No preference") AND user_sid != ? And object = ? And if_matched != 1';
@@ -179,7 +191,8 @@ router.post('/', function (req, res) {
         // the user has filled his/her information
         if(datas[0].object!="Nothing") {
     
-          // check number of the objects this user want to sell (posted)
+          // check number of the objects this user want to buy (posted)
+          // all objects wait for buyer will be shown on the result page
           var postList_len = count(datas);
           var AllPid = [];
           for (let i=0;i<postList_len;i++) {
@@ -229,7 +242,7 @@ router.post('/', function (req, res) {
                           login: 1
                         });
                       }
-                      // have result: choose the best buyer
+                      // have result: choose the best seller
                       // "others" type not be included
                       else{
                         var len = count(datas1);
@@ -259,7 +272,7 @@ router.post('/', function (req, res) {
                             }
     
                         if(min_interval==10000)  {
-                          // All possible buyers are banned
+                          // All possible seller are banned
                           l_object = l_object + "<td id ='obj" + i + "'>" + AllObject[i] + "</td>";
                           l_sid = l_sid + "<td id ='sid" + i + "'>NA</td>"; 
                           l_remark = l_remark + "<td id ='remark" + i + "'>NA</td>";

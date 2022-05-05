@@ -1,4 +1,16 @@
-
+/**
+ * A router handles the request of accepting or cancelling the match.
+ * 
+ * The user need to click the button after see the result page to indicate his/her response.
+ * If both users accept the match, then they can go to chat after the chatroom initiated by the seller.
+ * If user cancel the match, the whole match will fail and the user's relevant post will be deleted, 
+ * and no match for this post can be handled any more.
+ * 
+ * @author XU Yuhan, HUI Lam Lam
+ * @version 2.0
+ * 
+ * ref: https://github.com/LI-YUXIN-Ryan-Garcia/CUPar-CSCI3100-Project.git
+ */
 var express = require('express');
 let router = express.Router();
 var mysql  = require('mysql');  
@@ -72,7 +84,7 @@ router.post('/', function (req, res) {
     module.exports = UpdateRE;
     UpRE = new UpdateRE();
 
-    // function to delete ready_match 
+    // function to delete post 
     function DeleteObj() {
         this.select=function(id,pid){
             var sql = 'DELETE FROM post where user_sid = ' + id  +' AND category = "Seller" AND id =' + pid;
@@ -85,7 +97,7 @@ router.post('/', function (req, res) {
     DelObj = new DeleteObj();
 
 
-    // function to delete matchResult
+    // function to delete record in match_result
     function matchResult() {
         this.select = function (pid) {
             var sql = 'DELETE FROM match_result where pid1 =' + pid;
