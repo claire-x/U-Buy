@@ -1,4 +1,4 @@
-
+// module to update evaluation database and conduct evaluation
 var express = require('express');
 let router = express.Router();
 var mysql  = require('mysql'); 
@@ -51,6 +51,7 @@ pool.query(sql, function(err, user_list){
     })
 res.end()
 })
+//module to handle interaction on evaluation page
 router.get('/delete',function(req,res){
         var json = urlLib.parse(req.url,true).query;
     var type = json['type'];
@@ -73,7 +74,7 @@ router.get('/delete',function(req,res){
 
         }
         console.log("uid",uid,"sid",seller,"cid",buyer,"type",type)
-        
+        // statust code to identify evaulation record
         var formdb = require('../plugin/forumdb')
         formdb.query_negotiation_process(uid,buyer,seller,function(result){
                 var value = 4;
