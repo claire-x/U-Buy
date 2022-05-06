@@ -1,3 +1,4 @@
+// module to initial chat, redirect to chat room
 var express = require('express');
 var app = express.Router();
 var bodyParser = require('body-parser');
@@ -11,7 +12,7 @@ app.use(bodyParser.json());
 app.use(urlencodedParser);
 app.use(express.static(path.join('.','public')));
 var cookieParser = require('cookie-parser');
-
+// decode the ajax request
 
 app.use('/', urlencodedParser, function (req, res) {
   //console.debug(req.body)
