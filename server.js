@@ -149,6 +149,7 @@ app.use('/chat', urlencodedParser, function (req, res) {
   res.sendFile(__dirname+'/chat.html');
 });
 */
+// start to monitor dialogue and connect to socket
 let http = require('http').Server(app);
 let io = require('socket.io')(http);
 app.get('/chat1',urlencodedParser, function (req, res) {
@@ -160,7 +161,7 @@ app.get('/chat2', function (req, res) {
     res.sendFile(__dirname+'/service.html');
 })
 
-// socket连接对象，键名：cid****_sid***、sid****_cid****（前面为发送方，后面为接收方）
+// socket connector，key：cid****_sid***、sid****_cid****（sender，receiver）
 let localSockets = {}
 
 class Chat {
@@ -178,7 +179,6 @@ class Chat {
     }
 
     getSocketKeyValue() {
-        // 客户是发送消息方，客服是接收消息方
         if (this.isCustomerSender()) {
             return {
                 key: `cid${this.chatInfo.customer.id}_sid${this.chatInfo.service.id}`,
@@ -248,12 +248,12 @@ io.on('connect', function (socket) {
         let newChatObj = new Chat(socket, chatInfo)
         let newSocket = newChatObj.getSocketKeyValue()
 
-        // 若重复登录，断开原连接
+        // if repeat connection break out
         if(newSocket.key in localSockets){
             localSockets[newSocket.key].disconnect(true)
         }
 
-        // 设置新连接
+        // set new connection
         localSockets[newSocket.key] = newSocket.val
     })
     socket.on('send private message', function(req){
