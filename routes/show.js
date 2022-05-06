@@ -1,3 +1,4 @@
+// module to handle chat room inlcuding send receive message, confirm trade, load record delete chat room
 var express = require('express');
 var DB = require('../plugin/database')
 var app = express.Router();
@@ -12,6 +13,7 @@ app.use(bodyParser.json());
 app.use(urlencodedParser);
 app.use(express.static(path.join('.','public')));
 var cookieParser = require('cookie-parser');
+// check chatroom index first
 app.get('/',urlencodedParser, function (req, res){
 	
     let userID = req.cookies.islogin.sid; 
@@ -48,6 +50,7 @@ app.get('/',urlencodedParser, function (req, res){
     //res.redirect('/chat.html');
   }
   );
+// delete chatroom function
 app.get('/delete',function (req,res){
 	console.log('begin deletion');
 	let userID = req.cookies.islogin.sid; 
@@ -123,6 +126,7 @@ app.get('/delete',function (req,res){
 						}});
 }});
 });
+//create a new chatroom
 app.get('/create',function (req,res){
 	console.log('begin creation');
 	let userID = req.cookies.islogin.sid;
@@ -250,6 +254,7 @@ function contains(arr, obj) {
 }});}
     });
 });
+// load past record
 app.get('/record',function(req,res){
   console.log("start to pass the information")
 
@@ -274,6 +279,7 @@ app.get('/record',function(req,res){
   })
   
 });
+// open chatroom on the post page direction, add confirm trade button
 app.get('/chat_post',function(req,res){
   var json = urlLib.parse(req.url,true).query;
   console.log(json)
